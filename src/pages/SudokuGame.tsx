@@ -16,6 +16,20 @@ const SudokuGame = () => {
     generateNewGame(size);
   }, [size]);
 
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (!selectedCell) return;
+      
+      const number = parseInt(event.key);
+      if (!isNaN(number) && number >= 1 && number <= size) {
+        handleNumberInput(number);
+      }
+    };
+
+    window.addEventListener('keypress', handleKeyPress);
+    return () => window.removeEventListener('keypress', handleKeyPress);
+  }, [selectedCell, size]);
+
   const generateNewGame = (boardSize: number) => {
     const newBoard = Array(boardSize)
       .fill(null)
