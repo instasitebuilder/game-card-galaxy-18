@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+import SudokuBoard from "@/components/sudoku/SudokuBoard";
+import NumberPad from "@/components/sudoku/NumberPad";
+import GameControls from "@/components/sudoku/GameControls";
+import AdSpace from "@/components/ads/AdSpace";
 
 const SudokuGame = () => {
   const { toast } = useToast();
@@ -26,7 +22,6 @@ const SudokuGame = () => {
       .map(() => Array(boardSize).fill(0));
     const newSolution = generateSudokuSolution(boardSize);
     
-    // Create puzzle by removing some numbers
     const puzzle = [...newSolution.map(row => [...row])];
     const cellsToRemove = Math.floor((boardSize * boardSize) * 0.6);
     
@@ -122,11 +117,10 @@ const SudokuGame = () => {
       newBoard[row][col] = number;
       setBoard(newBoard);
       
-      // Check if game is won
       if (checkWin(newBoard)) {
         toast({
-          title: "Congratulations!",
-          description: "You've solved the Sudoku puzzle!",
+          title: "🎉 Congratulations!",
+          description: "You've successfully solved the Sudoku puzzle!",
           duration: 5000,
         });
       }
@@ -141,68 +135,33 @@ const SudokuGame = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-game-primary to-game-secondary p-6">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-white">Sudoku</h1>
-          <div className="flex gap-4">
-            <Select
-              value={size.toString()}
-              onValueChange={(value) => setSize(parseInt(value) as 4 | 9)}
-            >
-              <SelectTrigger className="w-32 bg-white">
-                <SelectValue placeholder="Size" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="4">4x4</SelectItem>
-                <SelectItem value="9">9x9</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button
-              onClick={() => generateNewGame(size)}
-              variant="secondary"
-              className="bg-white hover:bg-gray-100"
-            >
-              New Game
-            </Button>
+      <div className="max-w-7xl mx-auto">
+        <AdSpace position="top" />
+        
+        <div className="flex flex-col lg:flex-row gap-6">
+          <div className="flex-1">
+            <GameControls
+              size={size}
+              onSizeChange={(value) => setSize(parseInt(value) as 4 | 9)}
+              onNewGame={() => generateNewGame(size)}
+            />
+            
+            <SudokuBoard
+              size={size}
+              board={board}
+              selectedCell={selectedCell}
+              handleCellClick={handleCellClick}
+            />
+            
+            <NumberPad size={size} handleNumberInput={handleNumberInput} />
+          </div>
+          
+          <div className="hidden lg:block">
+            <AdSpace position="sidebar" />
           </div>
         </div>
-
-        <div className="bg-white rounded-lg p-6 shadow-xl">
-          <div className="grid gap-1" style={{ 
-            gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))` 
-          }}>
-            {board.map((row, rowIndex) =>
-              row.map((cell, colIndex) => (
-                <div
-                  key={`${rowIndex}-${colIndex}`}
-                  className={`
-                    aspect-square border border-gray-200 flex items-center justify-center text-xl font-bold cursor-pointer
-                    ${selectedCell?.row === rowIndex && selectedCell?.col === colIndex ? 'bg-blue-100' : ''}
-                    ${cell === 0 ? 'text-transparent' : 'text-gray-800'}
-                    ${colIndex % Math.sqrt(size) === Math.sqrt(size) - 1 ? 'border-r-2 border-r-gray-400' : ''}
-                    ${rowIndex % Math.sqrt(size) === Math.sqrt(size) - 1 ? 'border-b-2 border-b-gray-400' : ''}
-                  `}
-                  onClick={() => handleCellClick(rowIndex, colIndex)}
-                >
-                  {cell || '.'}
-                </div>
-              ))
-            )}
-          </div>
-
-          <div className="mt-6 grid grid-cols-5 gap-2">
-            {Array.from({ length: size }, (_, i) => (
-              <Button
-                key={i + 1}
-                onClick={() => handleNumberInput(i + 1)}
-                variant="outline"
-                className="aspect-square text-xl font-bold"
-              >
-                {i + 1}
-              </Button>
-            ))}
-          </div>
-        </div>
+        
+        <AdSpace position="bottom" />
       </div>
     </div>
   );
