@@ -7,15 +7,28 @@ interface NumberPadProps {
 }
 
 const NumberPad = ({ size, handleNumberInput }: NumberPadProps) => {
+  const getGridCols = () => {
+    switch (size) {
+      case 12:
+        return "grid-cols-4";
+      case 9:
+        return "grid-cols-3 sm:grid-cols-5";
+      case 6:
+        return "grid-cols-3";
+      default:
+        return "grid-cols-2";
+    }
+  };
+
   return (
     <div className="mt-6 max-w-md mx-auto">
-      <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+      <div className={`grid ${getGridCols()} gap-2`}>
         {Array.from({ length: size }, (_, i) => (
           <Button
             key={i + 1}
             onClick={() => handleNumberInput(i + 1)}
             variant="outline"
-            className="aspect-square text-xl font-bold hover:bg-game-accent/20 border-2 border-game-secondary text-game-primary"
+            className="aspect-square text-base sm:text-xl font-bold hover:bg-game-accent/20 border-2 border-game-secondary text-game-primary"
           >
             {i + 1}
           </Button>

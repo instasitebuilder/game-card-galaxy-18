@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import SudokuBoard from "@/components/sudoku/SudokuBoard";
 import NumberPad from "@/components/sudoku/NumberPad";
 import GameControls from "@/components/sudoku/GameControls";
@@ -7,10 +7,14 @@ import AdSpace from "@/components/ads/AdSpace";
 
 const SudokuGame = () => {
   const { toast } = useToast();
-  const [size, setSize] = useState<4 | 9>(9);
+  const [size, setSize] = useState<4 | 6 | 9 | 12>(9);
   const [board, setBoard] = useState<number[][]>([]);
   const [solution, setSolution] = useState<number[][]>([]);
   const [selectedCell, setSelectedCell] = useState<{ row: number; col: number } | null>(null);
+  const [wrongAttempts, setWrongAttempts] = useState(0);
+  const [fixedTime, setFixedTime] = useState(15); // 15 minutes default
+  const [remainingTime, setRemainingTime] = useState(fixedTime * 60);
+  const [isGameActive, setIsGameActive] = useState(false);
 
   useEffect(() => {
     generateNewGame(size);
@@ -18,7 +22,7 @@ const SudokuGame = () => {
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      if (!selectedCell) return;
+      if (!selectedCell || !isGameActive) return;
       
       const number = parseInt(event.key);
       if (!isNaN(number) && number >= 1 && number <= size) {
@@ -28,7 +32,34 @@ const SudokuGame = () => {
 
     window.addEventListener('keypress', handleKeyPress);
     return () => window.removeEventListener('keypress', handleKeyPress);
-  }, [selectedCell, size]);
+  }, [selectedCell, size, isGameActive]);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isGameActive && remainingTime > 0) {
+      timer = setInterval(() => {
+        setRemainingTime((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            handleGameOver();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [isGameActive, remainingTime]);
+
+  const handleGameOver = () => {
+    setIsGameActive(false);
+    toast({
+      title: "Game Over",
+      description: "Time's up! Try again with a new game.",
+      duration: 3000,
+    });
+    generateNewGame(size);
+  };
 
   const generateNewGame = (boardSize: number) => {
     const newBoard = Array(boardSize)
@@ -47,6 +78,9 @@ const SudokuGame = () => {
     
     setBoard(puzzle);
     setSolution(newSolution);
+    setWrongAttempts(0);
+    setRemainingTime(fixedTime * 60);
+    setIsGameActive(true);
   };
 
   const generateSudokuSolution = (boardSize: number): number[][] => {
@@ -123,22 +157,62 @@ const SudokuGame = () => {
   };
 
   const handleNumberInput = (number: number) => {
-    if (!selectedCell) return;
+    if (!selectedCell || !isGameActive) return;
     const { row, col } = selectedCell;
     
-    if (isValidMove(board, row, col, number, size)) {
+    if (solution[row][col] === number) {
       const newBoard = board.map(row => [...row]);
       newBoard[row][col] = number;
       setBoard(newBoard);
       
       if (checkWin(newBoard)) {
+        setIsGameActive(false);
         toast({
           title: "🎉 Congratulations!",
           description: "You've successfully solved the Sudoku puzzle!",
           duration: 5000,
         });
       }
+    } else {
+      const newWrongAttempts = wrongAttempts + 1;
+      setWrongAttempts(newWrongAttempts);
+      
+      if (newWrongAttempts >= 5) {
+        toast({
+          title: "Game Over",
+          description: "Too many wrong attempts! Starting a new game.",
+          duration: 3000,
+        });
+        generateNewGame(size);
+      } else {
+        toast({
+          title: "Wrong Move",
+          description: `${5 - newWrongAttempts} attempts remaining`,
+          duration: 2000,
+        });
+      }
     }
+  };
+
+  const handleHint = () => {
+    if (!selectedCell || !isGameActive) return;
+    const { row, col } = selectedCell;
+    if (board[row][col] === 0) {
+      const newBoard = board.map(row => [...row]);
+      newBoard[row][col] = solution[row][col];
+      setBoard(newBoard);
+      toast({
+        title: "Hint Used",
+        description: "A number has been revealed!",
+        duration: 2000,
+      });
+    }
+  };
+
+  const handleFixedTimeChange = (time: number) => {
+    const validTime = Math.max(1, Math.min(60, time));
+    setFixedTime(validTime);
+    setRemainingTime(validTime * 60);
   };
 
   const checkWin = (currentBoard: number[][]): boolean => {
@@ -156,8 +230,13 @@ const SudokuGame = () => {
           <div className="flex-1">
             <GameControls
               size={size}
-              onSizeChange={(value) => setSize(parseInt(value) as 4 | 9)}
+              onSizeChange={(value) => setSize(parseInt(value) as 4 | 6 | 9 | 12)}
               onNewGame={() => generateNewGame(size)}
+              onHint={handleHint}
+              fixedTime={fixedTime}
+              onFixedTimeChange={handleFixedTimeChange}
+              remainingTime={remainingTime}
+              wrongAttempts={wrongAttempts}
             />
             
             <SudokuBoard
