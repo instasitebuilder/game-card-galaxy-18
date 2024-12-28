@@ -56,6 +56,9 @@ export default {
           primary: "#4C1D95",
           secondary: "#7C3AED",
           accent: "#C4B5FD",
+          background: "#1a1a2e",
+          surface: "#16213e",
+          highlight: "#e94560",
         },
       },
       keyframes: {

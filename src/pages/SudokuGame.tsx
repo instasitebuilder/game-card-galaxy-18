@@ -80,6 +80,8 @@ const SudokuGame = () => {
       .fill(null)
       .map(() => Array(boardSize).fill(0));
 
+    const boxSize = Math.sqrt(boardSize);
+
     const fillBoard = (board: number[][]): boolean => {
       for (let row = 0; row < boardSize; row++) {
         for (let col = 0; col < boardSize; col++) {
@@ -224,7 +226,7 @@ const SudokuGame = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-game-primary to-game-secondary p-6">
+    <div className="min-h-screen bg-gradient-to-br from-game-primary via-[#6B46C1] to-game-secondary p-6">
       <div className="max-w-7xl mx-auto">
         <AdSpace position="top" />
         
