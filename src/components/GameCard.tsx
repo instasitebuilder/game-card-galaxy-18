@@ -9,7 +9,7 @@ interface GameCardProps {
 const GameCard = ({ title }: GameCardProps) => {
   // Map game titles to their respective images
   const gameImages: { [key: string]: string } = {
-    "Sudoku": "photo-1488590528505-98d2b5aba04b",
+    "Sudoku": "photo-1488590528505-98d2b5aba4b",
     "Tetris": "photo-1486312338219-ce68d2c6f44d",
     "Crossword Puzzles": "photo-1518770660439-4636190af475",
     "Jigsaw Puzzles": "photo-1581091226825-a6a2a5aee158",
@@ -19,9 +19,16 @@ const GameCard = ({ title }: GameCardProps) => {
   const defaultImage = "photo-1498050108023-c5249f4df085";
   const imageUrl = `https://source.unsplash.com/${gameImages[title] || defaultImage}/400x300`;
 
+  const getGamePath = (gameTitle: string) => {
+    const title = gameTitle.toLowerCase();
+    if (title === "sudoku") return "/sudoku";
+    if (title === "tetris") return "/tetris";
+    return "#";
+  };
+
   return (
     <Link
-      to={title.toLowerCase() === "sudoku" ? "/sudoku" : "#"}
+      to={getGamePath(title)}
       className="block group"
     >
       <div className="relative overflow-hidden rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl bg-white/10 backdrop-blur-sm animate-card-hover">
