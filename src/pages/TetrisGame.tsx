@@ -15,18 +15,17 @@ import {
 
 const BOARD_WIDTH = 10;
 const BOARD_HEIGHT = 20;
-const INITIAL_SPEED = 1000; // Base speed in milliseconds
+const INITIAL_SPEED = 1000;
 
-// Define difficulty levels
-const DIFFICULTY_LEVELS = {
-  EASY: [1, 2],
-  MEDIUM: [3, 4, 5, 6],
-  HARD: [7, 8, 9, 10],
-};
-
-// Speed multiplier for each level
-const getLevelSpeed = (level: number) => {
-  return INITIAL_SPEED / (1 + (level - 1) * 0.2);
+// Tetris pieces (tetrominos)
+const TETROMINOS = {
+  I: { shape: [[1, 1, 1, 1]], color: 1 },
+  L: { shape: [[1, 0], [1, 0], [1, 1]], color: 2 },
+  J: { shape: [[0, 1], [0, 1], [1, 1]], color: 3 },
+  O: { shape: [[1, 1], [1, 1]], color: 4 },
+  Z: { shape: [[1, 1, 0], [0, 1, 1]], color: 5 },
+  S: { shape: [[0, 1, 1], [1, 1, 0]], color: 6 },
+  T: { shape: [[1, 1, 1], [0, 1, 0]], color: 7 },
 };
 
 const TetrisGame = () => {
@@ -37,37 +36,114 @@ const TetrisGame = () => {
   const [level, setLevel] = useState(1);
   const [lines, setLines] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentPiece, setCurrentPiece] = useState({ x: 0, y: 0, shape: [] });
+  const [currentPiece, setCurrentPiece] = useState<{
+    shape: number[][];
+    position: { x: number; y: number };
+    color: number;
+  } | null>(null);
   const { toast } = useToast();
 
+  // Generate a random tetromino
+  const generatePiece = useCallback(() => {
+    const pieces = Object.keys(TETROMINOS);
+    const randomPiece = pieces[Math.floor(Math.random() * pieces.length)] as keyof typeof TETROMINOS;
+    const piece = TETROMINOS[randomPiece];
+    
+    return {
+      shape: piece.shape,
+      position: { x: Math.floor(BOARD_WIDTH / 2) - 1, y: 0 },
+      color: piece.color,
+    };
+  }, []);
+
+  // Update board with current piece
+  const updateBoard = useCallback(() => {
+    if (!currentPiece) return;
+
+    const newBoard = Array(BOARD_HEIGHT)
+      .fill(null)
+      .map(() => Array(BOARD_WIDTH).fill(0));
+
+    // Add current piece to board
+    currentPiece.shape.forEach((row, y) => {
+      row.forEach((value, x) => {
+        if (value) {
+          const boardY = y + currentPiece.position.y;
+          const boardX = x + currentPiece.position.x;
+          if (boardY >= 0 && boardY < BOARD_HEIGHT && boardX >= 0 && boardX < BOARD_WIDTH) {
+            newBoard[boardY][boardX] = currentPiece.color;
+          }
+        }
+      });
+    });
+
+    setBoard(newBoard);
+  }, [currentPiece]);
+
+  // Move piece
+  const movePiece = useCallback(
+    (direction: "left" | "right" | "down") => {
+      if (!currentPiece || !isPlaying) return;
+
+      const newPosition = { ...currentPiece.position };
+
+      switch (direction) {
+        case "left":
+          newPosition.x -= 1;
+          break;
+        case "right":
+          newPosition.x += 1;
+          break;
+        case "down":
+          newPosition.y += 1;
+          break;
+      }
+
+      // Check if move is valid
+      const isValid = currentPiece.shape.every((row, y) =>
+        row.every((value, x) => {
+          if (!value) return true;
+          const boardY = newPosition.y + y;
+          const boardX = newPosition.x + x;
+          return (
+            boardY >= 0 &&
+            boardY < BOARD_HEIGHT &&
+            boardX >= 0 &&
+            boardX < BOARD_WIDTH
+          );
+        })
+      );
+
+      if (isValid) {
+        setCurrentPiece({
+          ...currentPiece,
+          position: newPosition,
+        });
+      } else if (direction === "down") {
+        // Generate new piece when current piece can't move down
+        setCurrentPiece(generatePiece());
+      }
+    },
+    [currentPiece, isPlaying, generatePiece]
+  );
+
+  // Handle keyboard controls
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
       if (!isPlaying) return;
 
       switch (event.key) {
         case "ArrowLeft":
-          // Move piece left
-          toast({
-            title: "Move Left",
-            duration: 1000,
-          });
+          movePiece("left");
           break;
         case "ArrowRight":
-          // Move piece right
-          toast({
-            title: "Move Right",
-            duration: 1000,
-          });
+          movePiece("right");
           break;
         case "ArrowDown":
-          // Move piece down
-          toast({
-            title: "Move Down",
-            duration: 1000,
-          });
+          movePiece("down");
           break;
         case "ArrowUp":
-          // Rotate piece
+          // Rotate piece (to be implemented)
           toast({
             title: "Rotate",
             duration: 1000,
@@ -75,9 +151,26 @@ const TetrisGame = () => {
           break;
       }
     },
-    [isPlaying, toast]
+    [isPlaying, movePiece, toast]
   );
 
+  // Game loop
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    const gameLoop = setInterval(() => {
+      movePiece("down");
+    }, INITIAL_SPEED / (1 + (level - 1) * 0.2));
+
+    return () => clearInterval(gameLoop);
+  }, [isPlaying, level, movePiece]);
+
+  // Update board whenever piece changes
+  useEffect(() => {
+    updateBoard();
+  }, [currentPiece, updateBoard]);
+
+  // Set up keyboard listeners
   useEffect(() => {
     window.addEventListener("keydown", handleKeyPress);
     return () => {
@@ -90,6 +183,7 @@ const TetrisGame = () => {
     setScore(0);
     setLines(0);
     setIsPlaying(false);
+    setCurrentPiece(null);
     toast({
       title: "Game Reset",
       description: "Start a new game!",
@@ -97,19 +191,16 @@ const TetrisGame = () => {
   };
 
   const togglePlay = () => {
-    setIsPlaying(!isPlaying);
     if (!isPlaying) {
-      toast({
-        title: "Game Started!",
-        description: `Level ${level} - ${
-          level <= 2
-            ? "Easy"
-            : level <= 6
-            ? "Medium"
-            : "Hard"
-        } difficulty`,
-      });
+      setCurrentPiece(generatePiece());
     }
+    setIsPlaying(!isPlaying);
+    toast({
+      title: isPlaying ? "Game Paused" : "Game Started!",
+      description: `Level ${level} - ${
+        level <= 2 ? "Easy" : level <= 6 ? "Medium" : "Hard"
+      } difficulty`,
+    });
   };
 
   return (
