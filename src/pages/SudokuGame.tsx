@@ -2,17 +2,19 @@ import React, { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import SudokuBoard from "@/components/sudoku/SudokuBoard";
 import NumberPad from "@/components/sudoku/NumberPad";
-import GameControls from "@/components/sudoku/GameControls";
+import GameHeader from "@/components/sudoku/GameHeader";
+import GameSettings from "@/components/sudoku/GameSettings";
+import GameActions from "@/components/sudoku/GameActions";
 import AdSpace from "@/components/ads/AdSpace";
 
 const SudokuGame = () => {
   const { toast } = useToast();
-  const [size, setSize] = useState<4 | 6 | 9 | 12>(9);
+  const [size, setSize] = useState<4 | 6 | 9>(9);
   const [board, setBoard] = useState<number[][]>([]);
   const [solution, setSolution] = useState<number[][]>([]);
   const [selectedCell, setSelectedCell] = useState<{ row: number; col: number } | null>(null);
   const [wrongAttempts, setWrongAttempts] = useState(0);
-  const [fixedTime, setFixedTime] = useState(15); // 15 minutes default
+  const [fixedTime, setFixedTime] = useState(15);
   const [remainingTime, setRemainingTime] = useState(fixedTime * 60);
   const [isGameActive, setIsGameActive] = useState(false);
 
@@ -50,16 +52,6 @@ const SudokuGame = () => {
     }
     return () => clearInterval(timer);
   }, [isGameActive, remainingTime]);
-
-  const handleGameOver = () => {
-    setIsGameActive(false);
-    toast({
-      title: "Game Over",
-      description: "Time's up! Try again with a new game.",
-      duration: 3000,
-    });
-    generateNewGame(size);
-  };
 
   const generateNewGame = (boardSize: number) => {
     const newBoard = Array(boardSize)
@@ -150,6 +142,16 @@ const SudokuGame = () => {
     return true;
   };
 
+  const handleGameOver = () => {
+    setIsGameActive(false);
+    toast({
+      title: "Game Over",
+      description: "Time's up! Try again with a new game.",
+      duration: 3000,
+    });
+    generateNewGame(size);
+  };
+
   const handleCellClick = (row: number, col: number) => {
     if (board[row][col] === 0) {
       setSelectedCell({ row, col });
@@ -228,15 +230,21 @@ const SudokuGame = () => {
         
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="flex-1">
-            <GameControls
+            <GameHeader
+              wrongAttempts={wrongAttempts}
+              remainingTime={remainingTime}
+            />
+            
+            <GameSettings
               size={size}
-              onSizeChange={(value) => setSize(parseInt(value) as 4 | 6 | 9 | 12)}
-              onNewGame={() => generateNewGame(size)}
-              onHint={handleHint}
+              onSizeChange={(value) => setSize(parseInt(value) as 4 | 6 | 9)}
               fixedTime={fixedTime}
               onFixedTimeChange={handleFixedTimeChange}
-              remainingTime={remainingTime}
-              wrongAttempts={wrongAttempts}
+            />
+            
+            <GameActions
+              onNewGame={() => generateNewGame(size)}
+              onHint={handleHint}
             />
             
             <SudokuBoard

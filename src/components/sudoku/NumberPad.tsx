@@ -9,8 +9,6 @@ interface NumberPadProps {
 const NumberPad = ({ size, handleNumberInput }: NumberPadProps) => {
   const getGridCols = () => {
     switch (size) {
-      case 12:
-        return "grid-cols-4";
       case 9:
         return "grid-cols-3 sm:grid-cols-5";
       case 6:
@@ -28,7 +26,7 @@ const NumberPad = ({ size, handleNumberInput }: NumberPadProps) => {
             key={i + 1}
             onClick={() => handleNumberInput(i + 1)}
             variant="outline"
-            className="aspect-square text-base sm:text-xl font-bold hover:bg-game-accent/20 border-2 border-game-secondary text-game-primary"
+            className="aspect-square text-base sm:text-xl font-bold bg-white/10 hover:bg-game-accent/20 border-2 border-game-accent text-white"
           >
             {i + 1}
           </Button>
