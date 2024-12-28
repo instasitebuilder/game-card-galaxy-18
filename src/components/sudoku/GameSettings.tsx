@@ -1,5 +1,5 @@
 import React from "react";
-import { Settings } from "lucide-react";
+import { Settings, Timer } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 
