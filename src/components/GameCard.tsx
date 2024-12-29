@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Play } from "lucide-react";
+import { Play, Circle } from "lucide-react";
 
 interface GameCardProps {
   title: string;
@@ -37,6 +37,15 @@ const GameCard = ({ title }: GameCardProps) => {
       }`}
     >
       <div className="relative overflow-hidden rounded-xl shadow-lg bg-white/10 backdrop-blur-sm">
+        <div className="absolute top-4 right-4 z-10 flex items-center gap-2 bg-black/50 rounded-full px-3 py-1">
+          <Circle
+            size={8}
+            className={`${isAvailable ? "fill-green-500 text-green-500" : "fill-gray-500 text-gray-500"}`}
+          />
+          <span className="text-xs font-medium text-white">
+            {isAvailable ? "Online" : "Offline"}
+          </span>
+        </div>
         <div className="aspect-video w-full overflow-hidden">
           <img
             src={imageUrl}

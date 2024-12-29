@@ -15,7 +15,7 @@ const GAME_CATEGORIES = {
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-game-primary via-game-secondary to-game-accent p-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#4C1D95] via-[#7C3AED] to-[#C4B5FD] p-8">
       <div className="mx-auto max-w-7xl">
         <div className="text-center mb-16 animate-fade-in">
           <h1 className="text-5xl font-bold text-white mb-4 tracking-tight">
