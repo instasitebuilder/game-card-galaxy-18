@@ -1,6 +1,6 @@
 import React from "react";
 import CategorySection from "@/components/CategorySection";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 
 const GAME_CATEGORIES = {
@@ -32,7 +32,6 @@ const Index = () => {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-game-background/50 to-game-background pointer-events-none" />
               <div className="mx-auto max-w-7xl p-8 relative z-10">
-                <SidebarTrigger className="mb-4" />
                 <div className="text-center mb-16 animate-fade-in">
                   <h1 className="text-6xl font-bold text-white mb-4 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-game-accent via-white to-game-accent">
                     Game Galaxy
