@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Play } from "lucide-react";
 
 interface GameCardProps {
   title: string;
@@ -26,24 +27,37 @@ const GameCard = ({ title }: GameCardProps) => {
     return "#";
   };
 
+  const isAvailable = ["Sudoku", "Tetris"].includes(title);
+
   return (
     <Link
       to={getGamePath(title)}
-      className="block group"
+      className={`block group transition-transform duration-300 hover:-translate-y-2 ${
+        !isAvailable && "cursor-not-allowed opacity-70"
+      }`}
     >
-      <div className="relative overflow-hidden rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl bg-white/10 backdrop-blur-sm animate-card-hover">
+      <div className="relative overflow-hidden rounded-xl shadow-lg bg-white/10 backdrop-blur-sm">
         <div className="aspect-video w-full overflow-hidden">
           <img
             src={imageUrl}
             alt={title}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
         </div>
-        <div className="p-4">
-          <h3 className="text-lg font-semibold text-white/90 mb-2">{title}</h3>
-          <p className="text-white/70 text-sm">
-            Challenge your mind with {title.toLowerCase()}
+        <div className="absolute bottom-0 w-full p-6">
+          <h3 className="text-2xl font-bold text-white mb-2">{title}</h3>
+          <p className="text-white/80 text-sm mb-4">
+            {isAvailable
+              ? "Ready to play - Click to start!"
+              : "Coming soon - Stay tuned!"}
           </p>
+          {isAvailable && (
+            <div className="flex items-center text-game-accent gap-2">
+              <Play size={16} />
+              <span className="text-sm font-medium">Play Now</span>
+            </div>
+          )}
         </div>
       </div>
     </Link>
