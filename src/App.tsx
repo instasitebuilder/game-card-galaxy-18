@@ -8,6 +8,7 @@ import About from "./pages/About";
 import FutureGames from "./pages/FutureGames";
 import SudokuGame from "./pages/SudokuGame";
 import TetrisGame from "./pages/TetrisGame";
+import CrosswordGame from "./pages/CrosswordGame";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/future-games" element={<FutureGames />} />
           <Route path="/sudoku" element={<SudokuGame />} />
           <Route path="/tetris" element={<TetrisGame />} />
+          <Route path="/crossword" element={<CrosswordGame />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
