@@ -67,12 +67,31 @@ export const useTetris = (level: number) => {
         const { newBoard: clearedBoard, linesCleared } = clearLines(newBoard);
         
         if (linesCleared > 0) {
+          const messages = [
+            "Great job! Keep going!",
+            "Fantastic clear!",
+            "You're on fire!",
+            "Amazing play!"
+          ];
+          const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+          
           setScore(prev => prev + (linesCleared * 100 * level));
           setLines(prev => prev + linesCleared);
+          
           toast({
             title: `${linesCleared} ${linesCleared === 1 ? 'Line' : 'Lines'} Cleared!`,
-            duration: 1000,
+            description: randomMessage,
+            duration: 2000,
           });
+
+          // Special message for 4 lines (Tetris)
+          if (linesCleared === 4) {
+            toast({
+              title: "TETRIS!",
+              description: "Congratulations on the perfect clear!",
+              duration: 3000,
+            });
+          }
         }
         
         setBoard(clearedBoard);
@@ -83,8 +102,8 @@ export const useTetris = (level: number) => {
           setIsPlaying(false);
           toast({
             title: "Game Over!",
-            description: `Final Score: ${score}`,
-            duration: 3000,
+            description: `Congratulations! Final Score: ${score}`,
+            duration: 5000,
           });
           return false;
         }

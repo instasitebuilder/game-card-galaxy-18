@@ -21,8 +21,11 @@ const TetrisControls = ({ onMove, onRotate }: TetrisControlsProps) => {
           <Button
             variant="ghost"
             size="icon"
-            className="text-blue-400"
-            onClick={() => onMove?.("left")}
+            className="text-blue-400 hover:bg-blue-400/20"
+            onClick={(e) => {
+              e.preventDefault();
+              onMove?.("left");
+            }}
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
@@ -36,8 +39,11 @@ const TetrisControls = ({ onMove, onRotate }: TetrisControlsProps) => {
           <Button
             variant="ghost"
             size="icon"
-            className="text-blue-400"
-            onClick={() => onMove?.("right")}
+            className="text-blue-400 hover:bg-blue-400/20"
+            onClick={(e) => {
+              e.preventDefault();
+              onMove?.("right");
+            }}
           >
             <ArrowRight className="w-5 h-5" />
           </Button>
@@ -51,8 +57,11 @@ const TetrisControls = ({ onMove, onRotate }: TetrisControlsProps) => {
           <Button
             variant="ghost"
             size="icon"
-            className="text-blue-400"
-            onClick={() => onMove?.("down")}
+            className="text-blue-400 hover:bg-blue-400/20"
+            onClick={(e) => {
+              e.preventDefault();
+              onMove?.("down");
+            }}
           >
             <ArrowDown className="w-5 h-5" />
           </Button>
@@ -66,8 +75,11 @@ const TetrisControls = ({ onMove, onRotate }: TetrisControlsProps) => {
           <Button
             variant="ghost"
             size="icon"
-            className="text-blue-400"
-            onClick={onRotate}
+            className="text-blue-400 hover:bg-blue-400/20"
+            onClick={(e) => {
+              e.preventDefault();
+              onRotate?.();
+            }}
           >
             <RotateCw className="w-5 h-5" />
           </Button>
