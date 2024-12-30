@@ -57,9 +57,11 @@ export const mergeBoard = (
 };
 
 export const rotatePiece = (piece: { shape: number[][]; position: { x: number; y: number }; color: number }) => {
+  // Rotate the piece matrix 90 degrees clockwise
   const rotatedShape = piece.shape[0].map((_, index) =>
     piece.shape.map(row => row[index]).reverse()
   );
+  
   return {
     ...piece,
     shape: rotatedShape,

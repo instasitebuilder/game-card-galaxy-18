@@ -21,9 +21,10 @@ const TetrisControls = ({ onMove, onRotate }: TetrisControlsProps) => {
           <Button
             variant="ghost"
             size="icon"
-            className="text-blue-400 hover:bg-blue-400/20"
+            className="text-blue-400 hover:bg-blue-400/20 transition-colors"
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               onMove?.("left");
             }}
           >
@@ -39,9 +40,10 @@ const TetrisControls = ({ onMove, onRotate }: TetrisControlsProps) => {
           <Button
             variant="ghost"
             size="icon"
-            className="text-blue-400 hover:bg-blue-400/20"
+            className="text-blue-400 hover:bg-blue-400/20 transition-colors"
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               onMove?.("right");
             }}
           >
@@ -57,9 +59,10 @@ const TetrisControls = ({ onMove, onRotate }: TetrisControlsProps) => {
           <Button
             variant="ghost"
             size="icon"
-            className="text-blue-400 hover:bg-blue-400/20"
+            className="text-blue-400 hover:bg-blue-400/20 transition-colors"
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               onMove?.("down");
             }}
           >
@@ -75,9 +78,10 @@ const TetrisControls = ({ onMove, onRotate }: TetrisControlsProps) => {
           <Button
             variant="ghost"
             size="icon"
-            className="text-blue-400 hover:bg-blue-400/20"
+            className="text-blue-400 hover:bg-blue-400/20 transition-colors"
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               onRotate?.();
             }}
           >
