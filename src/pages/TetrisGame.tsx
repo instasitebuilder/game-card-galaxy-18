@@ -211,7 +211,7 @@ const TetrisGame = () => {
           
           <div className="flex flex-wrap gap-8 justify-center items-start">
             <div className="bg-white/10 p-6 rounded-lg backdrop-blur-sm">
-              <div className="mb-4">
+              <div className="mb-4 flex justify-between items-center">
                 <Select
                   value={level.toString()}
                   onValueChange={(value) => setLevel(parseInt(value))}
@@ -221,44 +221,39 @@ const TetrisGame = () => {
                     <SelectValue placeholder="Select Level" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="1">Level 1 (Easy)</SelectItem>
-                    <SelectItem value="2">Level 2 (Easy)</SelectItem>
-                    <SelectItem value="3">Level 3 (Medium)</SelectItem>
-                    <SelectItem value="4">Level 4 (Medium)</SelectItem>
-                    <SelectItem value="5">Level 5 (Medium)</SelectItem>
-                    <SelectItem value="6">Level 6 (Medium)</SelectItem>
-                    <SelectItem value="7">Level 7 (Hard)</SelectItem>
-                    <SelectItem value="8">Level 8 (Hard)</SelectItem>
-                    <SelectItem value="9">Level 9 (Hard)</SelectItem>
-                    <SelectItem value="10">Level 10 (Hard)</SelectItem>
+                    {[...Array(10)].map((_, i) => (
+                      <SelectItem key={i + 1} value={(i + 1).toString()}>
+                        Level {i + 1} ({i + 1 <= 2 ? "Easy" : i + 1 <= 6 ? "Medium" : "Hard"})
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
+                
+                <div className="flex gap-4">
+                  <Button
+                    onClick={togglePlay}
+                    className="bg-game-accent text-game-primary hover:bg-game-accent/90"
+                  >
+                    {isPlaying ? <Pause className="mr-2" /> : <Play className="mr-2" />}
+                    {isPlaying ? "Pause" : "Start"}
+                  </Button>
+                  
+                  <Button
+                    onClick={resetGame}
+                    variant="outline"
+                    className="border-game-accent text-white hover:bg-game-accent/20"
+                  >
+                    <RotateCcw className="mr-2" />
+                    Reset
+                  </Button>
+                </div>
               </div>
+              
               <TetrisBoard board={board} />
             </div>
 
             <div className="flex flex-col gap-6">
               <GameStats score={score} level={level} lines={lines} />
-              
-              <div className="flex gap-4">
-                <Button
-                  onClick={togglePlay}
-                  className="bg-game-accent text-game-primary hover:bg-game-accent/90"
-                >
-                  {isPlaying ? <Pause className="mr-2" /> : <Play className="mr-2" />}
-                  {isPlaying ? "Pause" : "Start"}
-                </Button>
-                
-                <Button
-                  onClick={resetGame}
-                  variant="outline"
-                  className="border-game-accent text-white hover:bg-game-accent/20"
-                >
-                  <RotateCcw className="mr-2" />
-                  Reset
-                </Button>
-              </div>
-
               <TetrisControls />
             </div>
           </div>
