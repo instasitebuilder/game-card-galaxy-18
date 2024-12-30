@@ -35,6 +35,11 @@ const menuItems = [
         url: "/sudoku",
         icon: GamepadIcon,
       },
+      {
+        title: "Crossword",
+        url: "/crossword",
+        icon: GamepadIcon,
+      },
     ],
   },
   {

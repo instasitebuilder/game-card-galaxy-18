@@ -7,9 +7,9 @@ const GAME_CATEGORIES = {
   "Featured Games": [
     "Tetris",
     "Sudoku",
+    "Crossword Puzzles",
   ],
   "Coming Soon": [
-    "Crossword Puzzles",
     "Jigsaw Puzzles",
     "Rubik's Cube",
   ],

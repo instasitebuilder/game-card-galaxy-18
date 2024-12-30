@@ -24,10 +24,11 @@ const GameCard = ({ title }: GameCardProps) => {
     const title = gameTitle.toLowerCase();
     if (title === "sudoku") return "/sudoku";
     if (title === "tetris") return "/tetris";
+    if (title === "crossword puzzles") return "/crossword";
     return "#";
   };
 
-  const isAvailable = ["Sudoku", "Tetris"].includes(title);
+  const isAvailable = ["Sudoku", "Tetris", "Crossword Puzzles"].includes(title);
 
   return (
     <Link
