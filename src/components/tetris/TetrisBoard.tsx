@@ -23,7 +23,7 @@ const TetrisBoard = ({ board }: TetrisBoardProps) => {
           {row.map((cell, j) => (
             <div
               key={`${i}-${j}`}
-              className={`w-6 h-6 ${COLORS[cell]} border border-white/10 rounded-sm`}
+              className={`w-6 h-6 ${COLORS[cell]} border border-white/10 rounded-sm transition-all duration-150`}
             />
           ))}
         </div>
