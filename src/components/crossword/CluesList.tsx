@@ -6,6 +6,7 @@ interface Clue {
   direction: 'across' | 'down';
   startRow: number;
   startCol: number;
+  answer: string; // Added answer property to match the type in CrosswordGame
 }
 
 interface CluesListProps {
