@@ -3,13 +3,54 @@ export const BOARD_HEIGHT = 20;
 export const INITIAL_SPEED = 1000;
 
 export const TETROMINOS = {
-  I: { shape: [[1, 1, 1, 1]], color: 1 },
-  L: { shape: [[1, 0], [1, 0], [1, 1]], color: 2 },
-  J: { shape: [[0, 1], [0, 1], [1, 1]], color: 3 },
-  O: { shape: [[1, 1], [1, 1]], color: 4 },
-  Z: { shape: [[1, 1, 0], [0, 1, 1]], color: 5 },
-  S: { shape: [[0, 1, 1], [1, 1, 0]], color: 6 },
-  T: { shape: [[1, 1, 1], [0, 1, 0]], color: 7 },
+  I: {
+    shape: [[1, 1, 1, 1]],
+    color: 1,
+  },
+  L: {
+    shape: [
+      [1, 0],
+      [1, 0],
+      [1, 1],
+    ],
+    color: 2,
+  },
+  J: {
+    shape: [
+      [0, 1],
+      [0, 1],
+      [1, 1],
+    ],
+    color: 3,
+  },
+  O: {
+    shape: [
+      [1, 1],
+      [1, 1],
+    ],
+    color: 4,
+  },
+  Z: {
+    shape: [
+      [1, 1, 0],
+      [0, 1, 1],
+    ],
+    color: 5,
+  },
+  S: {
+    shape: [
+      [0, 1, 1],
+      [1, 1, 0],
+    ],
+    color: 6,
+  },
+  T: {
+    shape: [
+      [1, 1, 1],
+      [0, 1, 0],
+    ],
+    color: 7,
+  },
 };
 
 export const checkCollision = (
@@ -57,7 +98,7 @@ export const mergeBoard = (
 };
 
 export const rotatePiece = (piece: { shape: number[][]; position: { x: number; y: number }; color: number }) => {
-  // Rotate the piece matrix 90 degrees clockwise
+  // Transpose the matrix and reverse each row to rotate 90 degrees clockwise
   const rotatedShape = piece.shape[0].map((_, index) =>
     piece.shape.map(row => row[index]).reverse()
   );
@@ -76,9 +117,28 @@ export const clearLines = (board: number[][]) => {
     return !isLineFull;
   });
 
+  // Add new empty lines at the top
   while (newBoard.length < BOARD_HEIGHT) {
     newBoard.unshift(Array(BOARD_WIDTH).fill(0));
   }
 
   return { newBoard, linesCleared };
+};
+
+export const calculateScore = (linesCleared: number, level: number) => {
+  const basePoints = {
+    1: 100,
+    2: 300,
+    3: 500,
+    4: 800,
+  };
+  return (basePoints[linesCleared as keyof typeof basePoints] || 0) * level;
+};
+
+export const calculateLevel = (lines: number) => {
+  return Math.floor(lines / 10) + 1;
+};
+
+export const calculateSpeed = (level: number) => {
+  return Math.max(100, INITIAL_SPEED - (level - 1) * 100); // Speed increases with level
 };

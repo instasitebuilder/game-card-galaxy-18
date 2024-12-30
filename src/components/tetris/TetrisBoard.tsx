@@ -6,13 +6,13 @@ interface TetrisBoardProps {
 
 const COLORS = [
   "bg-transparent",
-  "bg-purple-500",
-  "bg-blue-500",
-  "bg-green-500",
-  "bg-yellow-500",
-  "bg-red-500",
-  "bg-orange-500",
-  "bg-pink-500",
+  "bg-cyan-500",    // I piece
+  "bg-orange-500",  // L piece
+  "bg-blue-500",    // J piece
+  "bg-yellow-500",  // O piece
+  "bg-red-500",     // Z piece
+  "bg-green-500",   // S piece
+  "bg-purple-500",  // T piece
 ];
 
 const TetrisBoard = ({ board }: TetrisBoardProps) => {

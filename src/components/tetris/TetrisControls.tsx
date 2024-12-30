@@ -1,13 +1,14 @@
 import React from "react";
-import { ArrowDown, ArrowLeft, ArrowRight, RotateCw } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, RotateCw, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface TetrisControlsProps {
   onMove?: (direction: "left" | "right" | "down") => void;
   onRotate?: () => void;
+  onHardDrop?: () => void;
 }
 
-const TetrisControls = ({ onMove, onRotate }: TetrisControlsProps) => {
+const TetrisControls = ({ onMove, onRotate, onHardDrop }: TetrisControlsProps) => {
   return (
     <div className="bg-white/10 p-6 rounded-lg backdrop-blur-sm">
       <h3 className="text-lg font-semibold text-white/90 mb-4">Controls</h3>
@@ -54,7 +55,7 @@ const TetrisControls = ({ onMove, onRotate }: TetrisControlsProps) => {
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 text-white/70">
             <ArrowDown className="w-5 h-5 text-blue-400" />
-            <span>↓ Down Arrow: Move Down</span>
+            <span>↓ Down Arrow: Soft Drop</span>
           </div>
           <Button
             variant="ghost"
@@ -67,6 +68,25 @@ const TetrisControls = ({ onMove, onRotate }: TetrisControlsProps) => {
             }}
           >
             <ArrowDown className="w-5 h-5" />
+          </Button>
+        </div>
+
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 text-white/70">
+            <ChevronDown className="w-5 h-5 text-blue-400" />
+            <span>Space: Hard Drop</span>
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-blue-400 hover:bg-blue-400/20 transition-colors active:scale-95 transform"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onHardDrop?.();
+            }}
+          >
+            <ChevronDown className="w-5 h-5" />
           </Button>
         </div>
 
