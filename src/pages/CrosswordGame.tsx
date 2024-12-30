@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CrosswordGrid } from '@/components/crossword/CrosswordGrid';
 import { CluesList } from '@/components/crossword/CluesList';
 import { GameControls } from '@/components/crossword/GameControls';
+import { Book, Trophy } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 
 interface Clue {
@@ -13,7 +14,6 @@ interface Clue {
   startCol: number;
 }
 
-// Sample puzzle data
 const samplePuzzle = {
   size: 5,
   clues: [
@@ -43,17 +43,6 @@ const CrosswordGame = () => {
     Array(samplePuzzle.size).fill(null).map(() => Array(samplePuzzle.size).fill(''))
   );
   const [timer, setTimer] = useState(0);
-
-  useEffect(() => {
-    if (selectedCell) {
-      const clue = samplePuzzle.clues.find(
-        (c) => c.startRow === selectedCell.row && c.startCol === selectedCell.col
-      );
-      if (clue) {
-        setSelectedClue(clue);
-      }
-    }
-  }, [selectedCell]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -87,24 +76,35 @@ const CrosswordGame = () => {
 
     if (isCorrect) {
       toast({
-        title: "Congratulations!",
-        description: `You solved the puzzle in ${Math.floor(timer / 60)}:${(timer % 60).toString().padStart(2, '0')}!`,
+        title: "Congratulations! 🎉",
+        description: "You've successfully completed the puzzle!",
       });
     } else {
       toast({
-        title: "Not quite right",
-        description: "Keep trying! Some answers are incorrect.",
+        title: "Keep trying! 💪",
+        description: "Some answers are incorrect.",
         variant: "destructive",
       });
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-game-background via-game-primary to-game-secondary p-8">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-white mb-8 text-center">Crossword Puzzle</h1>
+    <div className="min-h-screen bg-gradient-to-br from-game-background via-game-primary to-game-secondary p-4 md:p-8">
+      <div className="max-w-7xl mx-auto space-y-8">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Book className="w-8 h-8 text-game-accent" />
+            <h1 className="text-3xl md:text-4xl font-bold text-white">Crossword Puzzle</h1>
+          </div>
+          <div className="flex items-center gap-2">
+            <Trophy className="w-6 h-6 text-game-accent" />
+            <span className="text-white/80 text-sm">Best Time: 05:23</span>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 space-y-6">
+            <GameControls timer={timer} onCheck={checkPuzzle} />
             <CrosswordGrid
               size={samplePuzzle.size}
               clues={samplePuzzle.clues}
@@ -114,11 +114,7 @@ const CrosswordGame = () => {
               onInput={handleInput}
             />
           </div>
-          <div className="space-y-6">
-            <GameControls
-              timer={timer}
-              onCheck={checkPuzzle}
-            />
+          <div>
             <CluesList
               clues={samplePuzzle.clues}
               selectedClue={selectedClue}
