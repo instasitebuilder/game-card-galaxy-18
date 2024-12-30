@@ -27,7 +27,7 @@ const TetrisGame = () => {
     rotatePiece,
     resetGame,
     togglePlay,
-  } = useTetris(level);
+  } = useTetris();  // Remove the level argument here
 
   // Handle keyboard controls
   const handleKeyPress = useCallback(
