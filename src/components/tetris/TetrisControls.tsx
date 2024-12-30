@@ -9,6 +9,22 @@ interface TetrisControlsProps {
 }
 
 const TetrisControls = ({ onMove, onRotate, onHardDrop }: TetrisControlsProps) => {
+  const handleButtonClick = (action: "left" | "right" | "down" | "rotate" | "hardDrop") => {
+    switch (action) {
+      case "left":
+      case "right":
+      case "down":
+        onMove?.(action);
+        break;
+      case "rotate":
+        onRotate?.();
+        break;
+      case "hardDrop":
+        onHardDrop?.();
+        break;
+    }
+  };
+
   return (
     <div className="bg-white/10 p-6 rounded-lg backdrop-blur-sm">
       <h3 className="text-lg font-semibold text-white/90 mb-4">Controls</h3>
@@ -23,11 +39,7 @@ const TetrisControls = ({ onMove, onRotate, onHardDrop }: TetrisControlsProps) =
             variant="ghost"
             size="icon"
             className="text-blue-400 hover:bg-blue-400/20 transition-colors active:scale-95 transform"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onMove?.("left");
-            }}
+            onClick={() => handleButtonClick("left")}
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
@@ -42,11 +54,7 @@ const TetrisControls = ({ onMove, onRotate, onHardDrop }: TetrisControlsProps) =
             variant="ghost"
             size="icon"
             className="text-blue-400 hover:bg-blue-400/20 transition-colors active:scale-95 transform"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onMove?.("right");
-            }}
+            onClick={() => handleButtonClick("right")}
           >
             <ArrowRight className="w-5 h-5" />
           </Button>
@@ -61,11 +69,7 @@ const TetrisControls = ({ onMove, onRotate, onHardDrop }: TetrisControlsProps) =
             variant="ghost"
             size="icon"
             className="text-blue-400 hover:bg-blue-400/20 transition-colors active:scale-95 transform"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onMove?.("down");
-            }}
+            onClick={() => handleButtonClick("down")}
           >
             <ArrowDown className="w-5 h-5" />
           </Button>
@@ -80,11 +84,7 @@ const TetrisControls = ({ onMove, onRotate, onHardDrop }: TetrisControlsProps) =
             variant="ghost"
             size="icon"
             className="text-blue-400 hover:bg-blue-400/20 transition-colors active:scale-95 transform"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onHardDrop?.();
-            }}
+            onClick={() => handleButtonClick("hardDrop")}
           >
             <ChevronDown className="w-5 h-5" />
           </Button>
@@ -99,11 +99,7 @@ const TetrisControls = ({ onMove, onRotate, onHardDrop }: TetrisControlsProps) =
             variant="ghost"
             size="icon"
             className="text-blue-400 hover:bg-blue-400/20 transition-colors active:scale-95 transform"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onRotate?.();
-            }}
+            onClick={() => handleButtonClick("rotate")}
           >
             <RotateCw className="w-5 h-5" />
           </Button>

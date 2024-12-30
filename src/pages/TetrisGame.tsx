@@ -13,7 +13,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTetris } from "@/hooks/useTetris";
-import { INITIAL_SPEED } from "@/utils/tetrisUtils";
 
 const TetrisGame = () => {
   const [level, setLevel] = React.useState(1);
@@ -24,10 +23,11 @@ const TetrisGame = () => {
     lines,
     isPlaying,
     movePiece,
+    hardDrop,
     rotatePiece,
     resetGame,
     togglePlay,
-  } = useTetris();  // Remove the level argument here
+  } = useTetris();
 
   // Handle keyboard controls
   const handleKeyPress = useCallback(
@@ -47,21 +47,13 @@ const TetrisGame = () => {
         case "ArrowUp":
           rotatePiece();
           break;
+        case " ":
+          hardDrop();
+          break;
       }
     },
-    [isPlaying, movePiece, rotatePiece]
+    [isPlaying, movePiece, rotatePiece, hardDrop]
   );
-
-  // Game loop
-  useEffect(() => {
-    if (!isPlaying) return;
-
-    const gameLoop = setInterval(() => {
-      movePiece("down");
-    }, INITIAL_SPEED / (1 + (level - 1) * 0.2));
-
-    return () => clearInterval(gameLoop);
-  }, [isPlaying, level, movePiece]);
 
   // Set up keyboard listeners
   useEffect(() => {
@@ -140,7 +132,11 @@ const TetrisGame = () => {
 
             <div className="flex flex-col gap-6">
               <GameStats score={score} level={level} lines={lines} />
-              <TetrisControls />
+              <TetrisControls
+                onMove={movePiece}
+                onRotate={rotatePiece}
+                onHardDrop={hardDrop}
+              />
             </div>
           </div>
         </div>
