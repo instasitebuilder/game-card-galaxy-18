@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { motion, AnimatePresence } from 'framer-motion';
+import GameInstructions from '@/components/hanoi/GameInstructions';
+import GameControls from '@/components/hanoi/GameControls';
 
 interface Disc {
   size: number;
@@ -56,11 +58,63 @@ const TowerOfHanoi = () => {
     setGameStarted(true);
   };
 
+  const handleMove = (sourcePegIndex: number, targetPegIndex: number) => {
+    if (gameState.isComplete) return;
+
+    const sourcePeg = gameState.pegs[sourcePegIndex];
+    const targetPeg = gameState.pegs[targetPegIndex];
+
+    if (sourcePeg.length === 0) {
+      toast({
+        title: "Invalid Move",
+        description: "No disc to move from this peg!",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const sourceDisc = sourcePeg[sourcePeg.length - 1];
+    if (targetPeg.length > 0 && sourceDisc.size > targetPeg[targetPeg.length - 1].size) {
+      toast({
+        title: "Invalid Move",
+        description: "Cannot place a larger disc on top of a smaller one!",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const newPegs = gameState.pegs.map((peg, i) => {
+      if (i === sourcePegIndex) {
+        return peg.slice(0, -1);
+      }
+      if (i === targetPegIndex) {
+        return [...peg, sourceDisc];
+      }
+      return peg;
+    });
+
+    const newMoves = gameState.moves + 1;
+    const isComplete = targetPegIndex === 2 && newPegs[2].length === numDiscs;
+
+    if (isComplete) {
+      toast({
+        title: "Congratulations! 🎉",
+        description: `You solved the puzzle in ${newMoves} moves! (Optimal: ${calculateOptimalMoves(numDiscs)})`,
+      });
+    }
+
+    setGameState({
+      pegs: newPegs,
+      selectedDisc: null,
+      moves: newMoves,
+      isComplete,
+    });
+  };
+
   const handleDiscClick = (pegIndex: number, discIndex: number) => {
     if (gameState.isComplete) return;
 
     if (gameState.selectedDisc === null) {
-      // Only allow selecting top disc
       if (discIndex === gameState.pegs[pegIndex].length - 1) {
         setGameState({
           ...gameState,
@@ -68,55 +122,7 @@ const TowerOfHanoi = () => {
         });
       }
     } else {
-      handleMove(pegIndex);
-    }
-  };
-
-  const handleMove = (targetPegIndex: number) => {
-    if (!gameState.selectedDisc) return;
-
-    const { pegIndex: sourcePegIndex, discIndex } = gameState.selectedDisc;
-    const sourceDisc = gameState.pegs[sourcePegIndex][discIndex];
-    const targetPeg = gameState.pegs[targetPegIndex];
-
-    // Check if move is valid
-    if (targetPeg.length === 0 || sourceDisc.size < targetPeg[targetPeg.length - 1].size) {
-      const newPegs = gameState.pegs.map((peg, i) => {
-        if (i === sourcePegIndex) {
-          return peg.slice(0, -1);
-        }
-        if (i === targetPegIndex) {
-          return [...peg, sourceDisc];
-        }
-        return peg;
-      });
-
-      const newMoves = gameState.moves + 1;
-      const isComplete = targetPegIndex === 2 && newPegs[2].length === numDiscs;
-
-      if (isComplete) {
-        toast({
-          title: "Congratulations! 🎉",
-          description: `You solved the puzzle in ${newMoves} moves! (Optimal: ${calculateOptimalMoves(numDiscs)})`,
-        });
-      }
-
-      setGameState({
-        pegs: newPegs,
-        selectedDisc: null,
-        moves: newMoves,
-        isComplete,
-      });
-    } else {
-      toast({
-        title: "Invalid Move",
-        description: "You cannot place a larger disc on top of a smaller one!",
-        variant: "destructive",
-      });
-      setGameState({
-        ...gameState,
-        selectedDisc: null,
-      });
+      handleMove(gameState.selectedDisc.pegIndex, pegIndex);
     }
   };
 
@@ -128,6 +134,8 @@ const TowerOfHanoi = () => {
     <div className="min-h-screen bg-game-background text-white p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-8">Tower of Hanoi</h1>
+        
+        <GameInstructions />
         
         {!gameStarted ? (
           <div className="text-center space-y-6">
@@ -165,6 +173,11 @@ const TowerOfHanoi = () => {
               </div>
               <Button onClick={resetGame}>Reset Game</Button>
             </div>
+
+            <GameControls 
+              onMove={handleMove}
+              isGameStarted={gameStarted}
+            />
 
             <div className="relative flex justify-around items-end h-[400px]">
               {gameState.pegs.map((peg, pegIndex) => (
