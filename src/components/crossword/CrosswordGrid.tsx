@@ -21,8 +21,17 @@ export const CrosswordGrid: React.FC<CrosswordGridProps> = ({
   onCellSelect,
   onInput,
 }) => {
+  // Initialize answers at the start to ensure it's always available
+  const answers = Array(size)
+    .fill(null)
+    .map((_, i) => 
+      Array(size)
+        .fill('')
+        .map((_, j) => userAnswers[i]?.[j] || '')
+    );
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, row: number, col: number) => {
-    if (e.key === 'Backspace' && userAnswers[row][col] === '') {
+    if (e.key === 'Backspace' && answers[row][col] === '') {
       e.preventDefault();
       if (col > 0) {
         onCellSelect(row, col - 1);
@@ -55,9 +64,6 @@ export const CrosswordGrid: React.FC<CrosswordGridProps> = ({
       }
     }
   };
-
-  // Ensure userAnswers is initialized with empty strings
-  const answers = userAnswers || Array(size).fill(null).map(() => Array(size).fill(''));
 
   return (
     <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
