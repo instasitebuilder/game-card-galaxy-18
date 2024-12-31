@@ -17,7 +17,7 @@ export const CrosswordGrid: React.FC<CrosswordGridProps> = ({
   size,
   clues,
   selectedCell,
-  userAnswers,
+  userAnswers = Array(size).fill(null).map(() => Array(size).fill('')),
   onCellSelect,
   onInput,
 }) => {
@@ -56,6 +56,9 @@ export const CrosswordGrid: React.FC<CrosswordGridProps> = ({
     }
   };
 
+  // Ensure userAnswers is initialized with empty strings
+  const answers = userAnswers || Array(size).fill(null).map(() => Array(size).fill(''));
+
   return (
     <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
       <div className="grid gap-1" style={{ gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))` }}>
@@ -80,7 +83,7 @@ export const CrosswordGrid: React.FC<CrosswordGridProps> = ({
                 <input
                   type="text"
                   maxLength={1}
-                  value={userAnswers[row][col]}
+                  value={answers[row][col]}
                   onChange={(e) => handleInput(e, row, col)}
                   onKeyDown={(e) => handleKeyDown(e, row, col)}
                   onClick={() => onCellSelect(row, col)}
