@@ -6,17 +6,7 @@ import { DifficultySelector } from '@/components/crossword/DifficultySelector';
 import { Book, Trophy, HelpCircle } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import { Progress } from '@/components/ui/progress';
-
-interface Clue {
-  number: number;
-  text: string;
-  answer: string;
-  direction: 'across' | 'down';
-  startRow: number;
-  startCol: number;
-}
-
-type Difficulty = 'easy' | 'medium' | 'hard';
+import { type Clue, type Difficulty, type Direction } from '@/types/crossword';
 
 const puzzles = {
   easy: {
@@ -26,7 +16,7 @@ const puzzles = {
         number: 1,
         text: "First word in many fairy tales",
         answer: "ONCE",
-        direction: "across",
+        direction: "across" as Direction,
         startRow: 0,
         startCol: 0,
       },
@@ -34,7 +24,7 @@ const puzzles = {
         number: 2,
         text: "Opposite of night",
         answer: "DAY",
-        direction: "down",
+        direction: "down" as Direction,
         startRow: 0,
         startCol: 2,
       },
@@ -47,7 +37,7 @@ const puzzles = {
         number: 1,
         text: "Capital of France",
         answer: "PARIS",
-        direction: "across",
+        direction: "across" as Direction,
         startRow: 0,
         startCol: 0,
       },
@@ -55,7 +45,7 @@ const puzzles = {
         number: 2,
         text: "Planet nearest to the sun",
         answer: "MERCURY",
-        direction: "down",
+        direction: "down" as Direction,
         startRow: 0,
         startCol: 2,
       },
@@ -68,7 +58,7 @@ const puzzles = {
         number: 1,
         text: "Largest living bird",
         answer: "OSTRICH",
-        direction: "across",
+        direction: "across" as Direction,
         startRow: 0,
         startCol: 0,
       },
@@ -76,7 +66,7 @@ const puzzles = {
         number: 2,
         text: "Study of ancient writings",
         answer: "PALEOGRAPHY",
-        direction: "down",
+        direction: "down" as Direction,
         startRow: 0,
         startCol: 2,
       },

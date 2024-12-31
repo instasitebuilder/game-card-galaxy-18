@@ -1,13 +1,5 @@
 import React from 'react';
-
-interface Clue {
-  number: number;
-  text: string;
-  direction: 'across' | 'down';
-  startRow: number;
-  startCol: number;
-  answer: string; // Added answer property to match the type in CrosswordGame
-}
+import { type Clue } from '@/types/crossword';
 
 interface CluesListProps {
   clues: Clue[];
