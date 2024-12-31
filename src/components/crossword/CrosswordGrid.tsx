@@ -6,6 +6,8 @@ interface CrosswordGridProps {
     number: number;
     startRow: number;
     startCol: number;
+    answer: string;
+    direction: "across" | "down";
   }>;
   selectedCell: { row: number; col: number } | null;
   userAnswers: string[][];
@@ -65,6 +67,19 @@ export const CrosswordGrid: React.FC<CrosswordGridProps> = ({
     }
   };
 
+  const isCorrectAnswer = (row: number, col: number): boolean => {
+    const cellClue = clues.find(
+      (clue) => 
+        (clue.direction === 'across' && clue.startRow === row && col >= clue.startCol && col < clue.startCol + clue.answer.length) ||
+        (clue.direction === 'down' && clue.startCol === col && row >= clue.startRow && row < clue.startRow + clue.answer.length)
+    );
+
+    if (!cellClue) return false;
+
+    const index = cellClue.direction === 'across' ? col - cellClue.startCol : row - cellClue.startRow;
+    return answers[row][col].toUpperCase() === cellClue.answer[index];
+  };
+
   return (
     <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
       <div className="grid gap-1" style={{ gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))` }}>
@@ -75,6 +90,7 @@ export const CrosswordGrid: React.FC<CrosswordGridProps> = ({
             )?.number;
 
             const isSelected = selectedCell?.row === row && selectedCell?.col === col;
+            const isCorrect = isCorrectAnswer(row, col);
 
             return (
               <div
@@ -93,9 +109,10 @@ export const CrosswordGrid: React.FC<CrosswordGridProps> = ({
                   onChange={(e) => handleInput(e, row, col)}
                   onKeyDown={(e) => handleKeyDown(e, row, col)}
                   onClick={() => onCellSelect(row, col)}
-                  className={`w-full h-full text-center text-lg font-semibold uppercase bg-white/5 border ${
-                    isSelected ? 'border-game-accent' : 'border-white/20'
-                  } text-white focus:outline-none focus:ring-2 focus:ring-game-accent transition-colors`}
+                  className={`w-full h-full text-center text-lg font-semibold uppercase 
+                    ${isCorrect ? 'bg-green-500/20' : 'bg-white/5'} 
+                    border ${isSelected ? 'border-game-accent' : 'border-white/20'}
+                    text-white focus:outline-none focus:ring-2 focus:ring-game-accent transition-colors`}
                 />
               </div>
             );

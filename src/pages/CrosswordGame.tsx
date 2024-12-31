@@ -4,7 +4,7 @@ import { CluesList } from '@/components/crossword/CluesList';
 import { GameControls } from '@/components/crossword/GameControls';
 import { DifficultySelector } from '@/components/crossword/DifficultySelector';
 import { Book, Trophy, HelpCircle } from 'lucide-react';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from '@/hooks/use-toast';
 import { Progress } from '@/components/ui/progress';
 import { type Clue, type Difficulty, type Direction } from '@/types/crossword';
 
@@ -106,7 +106,9 @@ const CrosswordGame = () => {
   const handleCellSelect = (row: number, col: number) => {
     setSelectedCell({ row, col });
     const clue = currentPuzzle.clues.find(
-      (c) => c.startRow === row && c.startCol === col
+      (c) => 
+        (c.direction === 'across' && c.startRow === row && col >= c.startCol && col < c.startCol + c.answer.length) ||
+        (c.direction === 'down' && c.startCol === col && row >= c.startRow && row < c.startRow + c.answer.length)
     );
     if (clue) {
       setSelectedClue(clue);
@@ -149,14 +151,23 @@ const CrosswordGame = () => {
       );
 
       if (clue) {
-        const index = clue.direction === 'across' ? col - clue.startCol : row - clue.startRow;
-        const correctLetter = clue.answer[index];
-        handleInput(row, col, correctLetter);
+        const newAnswers = [...userAnswers];
+        if (clue.direction === 'across') {
+          for (let i = 0; i < clue.answer.length; i++) {
+            newAnswers[clue.startRow][clue.startCol + i] = clue.answer[i];
+          }
+        } else {
+          for (let i = 0; i < clue.answer.length; i++) {
+            newAnswers[clue.startRow + i][clue.startCol] = clue.answer[i];
+          }
+        }
+        setUserAnswers(newAnswers);
         setHintsRemaining(prev => prev - 1);
-        setScore(prev => Math.max(0, prev - 50)); // Penalty for using hint
+        setScore(prev => Math.max(0, prev - 50));
+        updateProgress(newAnswers);
         toast({
           title: "Hint Used!",
-          description: `The correct letter is "${correctLetter}". ${hintsRemaining - 1} hints remaining.`,
+          description: `Complete word filled in. ${hintsRemaining - 1} hints remaining.`,
         });
       }
     } else {
