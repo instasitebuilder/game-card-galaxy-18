@@ -4,6 +4,7 @@ import { toast } from '@/hooks/use-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import GameInstructions from '@/components/hanoi/GameInstructions';
 import GameControls from '@/components/hanoi/GameControls';
+import GameLayout from '@/components/layouts/GameLayout';
 
 interface Disc {
   size: number;
@@ -18,10 +19,10 @@ interface GameState {
 }
 
 const DISC_COLORS = [
-  'bg-red-500',
+  'bg-game-secondary',
+  'bg-game-accent',
   'bg-blue-500',
   'bg-green-500',
-  'bg-yellow-500',
   'bg-purple-500',
   'bg-pink-500',
   'bg-orange-500',
@@ -131,97 +132,110 @@ const TowerOfHanoi = () => {
   };
 
   return (
-    <div className="min-h-screen bg-game-background text-white p-8">
+    <GameLayout>
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-8">Tower of Hanoi</h1>
-        
-        <GameInstructions />
-        
-        {!gameStarted ? (
-          <div className="text-center space-y-6">
-            <div className="space-y-4">
-              <h2 className="text-2xl font-semibold mb-4">Select Number of Discs</h2>
-              <div className="flex justify-center gap-4">
-                {[3, 4, 5, 6, 7].map((n) => (
-                  <Button
-                    key={n}
-                    onClick={() => setNumDiscs(n)}
-                    variant={numDiscs === n ? "default" : "outline"}
-                    className="w-12 h-12"
-                  >
-                    {n}
-                  </Button>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h1 className="text-4xl font-bold text-center mb-8 text-white">Tower of Hanoi</h1>
+          
+          <GameInstructions />
+          
+          {!gameStarted ? (
+            <div className="text-center space-y-6 bg-gradient-card rounded-lg p-8 backdrop-blur-sm">
+              <div className="space-y-4">
+                <h2 className="text-2xl font-semibold mb-4 text-white">Select Number of Discs</h2>
+                <div className="flex justify-center gap-4">
+                  {[3, 4, 5, 6, 7].map((n) => (
+                    <Button
+                      key={n}
+                      onClick={() => setNumDiscs(n)}
+                      variant={numDiscs === n ? "default" : "outline"}
+                      className={`w-12 h-12 ${
+                        numDiscs === n ? 'bg-game-secondary text-white' : 'text-white'
+                      }`}
+                    >
+                      {n}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+              <Button
+                size="lg"
+                onClick={() => initializeGame(numDiscs)}
+                className="px-8 py-4 text-lg bg-game-secondary hover:bg-game-secondary/90 text-white"
+              >
+                Start Game
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-8 bg-gradient-card rounded-lg p-8 backdrop-blur-sm">
+              <div className="flex justify-between items-center mb-8">
+                <div className="space-y-2">
+                  <p className="text-lg text-white">Moves: {gameState.moves}</p>
+                  <p className="text-sm text-gray-400">
+                    Optimal moves: {calculateOptimalMoves(numDiscs)}
+                  </p>
+                </div>
+                <Button 
+                  onClick={resetGame}
+                  className="bg-game-secondary hover:bg-game-secondary/90 text-white"
+                >
+                  Reset Game
+                </Button>
+              </div>
+
+              <GameControls 
+                onMove={handleMove}
+                isGameStarted={gameStarted}
+              />
+
+              <div className="relative flex justify-around items-end h-[400px]">
+                {gameState.pegs.map((peg, pegIndex) => (
+                  <div key={pegIndex} className="relative flex flex-col items-center">
+                    {/* Peg */}
+                    <div className="absolute bottom-0 w-2 h-[300px] bg-game-secondary/50 rounded-t-lg" />
+                    
+                    {/* Base */}
+                    <div className="absolute bottom-0 w-32 h-2 bg-game-secondary/50 -translate-x-1/2 left-1/2" />
+                    
+                    {/* Discs */}
+                    <div className="relative w-full h-[300px] flex flex-col-reverse items-center justify-end">
+                      <AnimatePresence>
+                        {peg.map((disc, discIndex) => (
+                          <motion.div
+                            key={`${disc.size}-${pegIndex}-${discIndex}`}
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.8, opacity: 0 }}
+                            className={`absolute cursor-pointer transition-transform
+                              ${disc.color} 
+                              ${gameState.selectedDisc?.pegIndex === pegIndex && 
+                                gameState.selectedDisc?.discIndex === discIndex
+                                  ? 'ring-4 ring-white'
+                                  : ''
+                              }`}
+                            style={{
+                              width: `${disc.size * 40}px`,
+                              height: '30px',
+                              borderRadius: '15px',
+                              bottom: `${discIndex * 35}px`,
+                            }}
+                            onClick={() => handleDiscClick(pegIndex, discIndex)}
+                          />
+                        ))}
+                      </AnimatePresence>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
-            <Button
-              size="lg"
-              onClick={() => initializeGame(numDiscs)}
-              className="px-8 py-4 text-lg"
-            >
-              Start Game
-            </Button>
-          </div>
-        ) : (
-          <div className="space-y-8">
-            <div className="flex justify-between items-center mb-8">
-              <div className="space-y-2">
-                <p className="text-lg">Moves: {gameState.moves}</p>
-                <p className="text-sm text-gray-400">
-                  Optimal moves: {calculateOptimalMoves(numDiscs)}
-                </p>
-              </div>
-              <Button onClick={resetGame}>Reset Game</Button>
-            </div>
-
-            <GameControls 
-              onMove={handleMove}
-              isGameStarted={gameStarted}
-            />
-
-            <div className="relative flex justify-around items-end h-[400px]">
-              {gameState.pegs.map((peg, pegIndex) => (
-                <div key={pegIndex} className="relative flex flex-col items-center">
-                  {/* Peg */}
-                  <div className="absolute bottom-0 w-2 h-[300px] bg-gray-600 rounded-t-lg" />
-                  
-                  {/* Base */}
-                  <div className="absolute bottom-0 w-32 h-2 bg-gray-600 -translate-x-1/2 left-1/2" />
-                  
-                  {/* Discs */}
-                  <div className="relative w-full h-[300px] flex flex-col-reverse items-center justify-end">
-                    <AnimatePresence>
-                      {peg.map((disc, discIndex) => (
-                        <motion.div
-                          key={`${disc.size}-${pegIndex}-${discIndex}`}
-                          initial={{ scale: 0.8, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          exit={{ scale: 0.8, opacity: 0 }}
-                          className={`absolute cursor-pointer transition-transform
-                            ${disc.color} 
-                            ${gameState.selectedDisc?.pegIndex === pegIndex && 
-                              gameState.selectedDisc?.discIndex === discIndex
-                                ? 'ring-4 ring-white'
-                                : ''
-                            }`}
-                          style={{
-                            width: `${disc.size * 40}px`,
-                            height: '30px',
-                            borderRadius: '15px',
-                            bottom: `${discIndex * 35}px`,
-                          }}
-                          onClick={() => handleDiscClick(pegIndex, discIndex)}
-                        />
-                      ))}
-                    </AnimatePresence>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+          )}
+        </motion.div>
       </div>
-    </div>
+    </GameLayout>
   );
 };
 

@@ -53,9 +53,9 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         game: {
-          primary: "#2A0E61",
-          secondary: "#FF3D7F",
-          accent: "#FFB800",
+          primary: "#1A1F2C",
+          secondary: "#9b87f5",
+          accent: "#F97316",
           text: "#FFFFFF",
           surface: "rgba(255, 255, 255, 0.05)",
           card: {
@@ -66,7 +66,7 @@ export default {
         },
       },
       backgroundImage: {
-        'gradient-game': 'linear-gradient(to right bottom, #2A0E61, #FF3D7F)',
+        'gradient-game': 'linear-gradient(to right bottom, #1A1F2C, #2A1B54)',
         'gradient-card': 'linear-gradient(to bottom right, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
       },
       animation: {
