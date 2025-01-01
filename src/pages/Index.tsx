@@ -9,10 +9,6 @@ const GAME_CATEGORIES = {
     "Sudoku",
     "Crossword Puzzles",
   ],
-  "Coming Soon": [
-    "Jigsaw Puzzles",
-    "Rubik's Cube",
-  ],
 };
 
 const Index = () => {
@@ -21,7 +17,7 @@ const Index = () => {
       <div className="min-h-screen flex w-full bg-game-background">
         <AppSidebar />
         <main className="flex-1">
-          <div className="min-h-screen bg-gradient-to-br from-game-background via-game-primary to-game-secondary relative">
+          <div className="min-h-screen bg-gradient-to-br from-game-primary via-game-secondary to-game-background relative">
             <div 
               className="absolute inset-0 opacity-20"
               style={{
@@ -33,7 +29,7 @@ const Index = () => {
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-game-background/50 to-game-background pointer-events-none" />
               <div className="mx-auto max-w-7xl p-8 relative z-10">
                 <div className="text-center mb-16 animate-fade-in">
-                  <h1 className="text-6xl font-bold text-white mb-4 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-game-accent via-white to-game-accent">
+                  <h1 className="text-6xl font-bold mb-4 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-game-accent via-white to-game-accent">
                     Game Galaxy
                   </h1>
                   <p className="text-xl text-game-accent/90 max-w-2xl mx-auto">
