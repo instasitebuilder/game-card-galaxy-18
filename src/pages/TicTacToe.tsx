@@ -4,6 +4,7 @@ import { GameBoard } from "@/components/tictactoe/GameBoard";
 import { GameMode } from "@/components/tictactoe/GameMode";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import GameLayout from "@/components/layouts/GameLayout";
 
 type Player = "X" | "O";
 type GameState = "selecting" | "playing" | "finished";
@@ -71,7 +72,7 @@ const TicTacToe = () => {
   };
 
   return (
-    <div className="min-h-screen bg-game-background p-8">
+    <GameLayout>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -109,7 +110,7 @@ const TicTacToe = () => {
           </div>
         )}
       </motion.div>
-    </div>
+    </GameLayout>
   );
 };
 

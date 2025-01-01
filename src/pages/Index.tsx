@@ -2,12 +2,16 @@ import React from "react";
 import CategorySection from "@/components/CategorySection";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
+import AdSpace from "@/components/ads/AdSpace";
 
 const GAME_CATEGORIES = {
   "Featured Games": [
     "Tetris",
     "Sudoku",
     "Crossword Puzzles",
+    "Tic Tac Toe",
+    "Tower of Hanoi",
+    "Jigsaw Puzzle"
   ],
 };
 
@@ -27,6 +31,8 @@ const Index = () => {
           />
           
           <div className="relative">
+            <AdSpace position="top" />
+            
             <div className="mx-auto max-w-7xl p-8">
               {/* Hero Section */}
               <div className="text-center mb-16 space-y-6">
@@ -46,6 +52,8 @@ const Index = () => {
                 <CategorySection key={category} title={category} games={games} />
               ))}
             </div>
+            
+            <AdSpace position="bottom" />
           </div>
         </main>
       </div>

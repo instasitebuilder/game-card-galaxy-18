@@ -12,17 +12,17 @@ const GameCard = ({ title }: GameCardProps) => {
     "Sudoku": "photo-1488590528505-98d2b5aba4b",
     "Tetris": "photo-1486312338219-ce68d2c6f44d",
     "Crossword Puzzles": "photo-1518770660439-4636190af475",
+    "Tic Tac Toe": "photo-1611996575749-79a3a250f948",
+    "Tower of Hanoi": "photo-1509228468518-180dd4864904",
+    "Jigsaw Puzzle": "photo-1494059980473-813e73ee784b",
   };
 
   const defaultImage = "photo-1498050108023-c5249f4df085";
   const imageUrl = `https://source.unsplash.com/${gameImages[title] || defaultImage}/400x300`;
 
   const getGamePath = (gameTitle: string) => {
-    const title = gameTitle.toLowerCase();
-    if (title === "sudoku") return "/sudoku";
-    if (title === "tetris") return "/tetris";
-    if (title === "crossword puzzles") return "/crossword";
-    return "#";
+    const title = gameTitle.toLowerCase().replace(/\s+/g, '-');
+    return `/${title}`;
   };
 
   return (
