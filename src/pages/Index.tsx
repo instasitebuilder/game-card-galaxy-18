@@ -42,9 +42,14 @@ const Index = () => {
                 <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
                   Challenge your mind with our collection of puzzle games designed to enhance your cognitive abilities
                 </p>
-                <button className="px-8 py-3 bg-game-accent text-game-primary rounded-full font-semibold hover:bg-game-accent/90 transition-colors duration-300 shadow-lg">
-                  Explore Games
-                </button>
+                <div className="flex justify-center gap-4">
+                  <button className="px-8 py-3 bg-game-accent text-white rounded-full font-semibold hover:bg-game-accent/90 transition-colors duration-300 shadow-lg">
+                    Explore Games
+                  </button>
+                  <button className="px-8 py-3 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors duration-300 backdrop-blur-sm">
+                    Learn More
+                  </button>
+                </div>
               </div>
 
               {/* Games Grid */}

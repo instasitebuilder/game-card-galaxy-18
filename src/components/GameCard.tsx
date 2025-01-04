@@ -10,11 +10,11 @@ interface GameCardProps {
 const GameCard = ({ title }: GameCardProps) => {
   const gameImages: { [key: string]: string } = {
     "Sudoku": "photo-1488590528505-98d2b5aba4b",
-    "Tetris": "photo-1486312338219-ce68d2c6f44d",
-    "Crossword Puzzles": "photo-1518770660439-4636190af475",
-    "Tic Tac Toe": "photo-1611996575749-79a3a250f948",
-    "Tower of Hanoi": "photo-1509228468518-180dd4864904",
-    "Jigsaw Puzzle": "photo-1494059980473-813e73ee784b",
+    "Tetris": "photo-1485827404703-89b55fcc595e",
+    "Crossword Puzzles": "photo-1487058792275-0ad4aaf24ca7",
+    "Tic Tac Toe": "photo-1498936178812-4b2e558d2937",
+    "Tower of Hanoi": "photo-1526374965328-7f61d4dc18c5",
+    "Jigsaw Puzzle": "photo-1487887235947-a955ef187fcc",
   };
 
   const defaultImage = "photo-1498050108023-c5249f4df085";
@@ -31,6 +31,7 @@ const GameCard = ({ title }: GameCardProps) => {
       className="group relative block"
     >
       <div className="relative overflow-hidden rounded-2xl bg-gradient-card backdrop-blur-sm border border-game-card-border transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-2xl">
+        {/* Online indicator */}
         <div className="absolute top-4 right-4 z-10 flex items-center gap-2 bg-black/30 backdrop-blur-sm rounded-full px-3 py-1">
           <Circle size={8} className="fill-green-500 text-green-500 animate-pulse" />
           <span className="text-xs font-medium text-white">Live</span>
