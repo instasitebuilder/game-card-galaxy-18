@@ -3,6 +3,7 @@ import CategorySection from "@/components/CategorySection";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import AdSpace from "@/components/ads/AdSpace";
+import { ArrowRight, Sparkles, Brain, Trophy } from "lucide-react";
 
 const GAME_CATEGORIES = {
   "Featured Games": [
@@ -35,21 +36,57 @@ const Index = () => {
             
             <div className="mx-auto max-w-7xl p-8">
               {/* Hero Section */}
-              <div className="text-center mb-16 space-y-6">
+              <div className="text-center mb-16 space-y-8">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-game-surface backdrop-blur-sm border border-game-card-border mb-4">
+                  <Sparkles className="w-4 h-4 text-game-accent" />
+                  <span className="text-sm text-white/80">New Games Added Weekly</span>
+                </div>
+                
                 <h1 className="text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-game-accent via-game-secondary to-game-accent animate-float">
                   Brain Games
                 </h1>
+                
+                <div className="flex justify-center gap-6 text-white/80">
+                  <div className="flex items-center gap-2">
+                    <Brain className="w-5 h-5 text-game-accent" />
+                    <span>Enhance Cognitive Skills</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Trophy className="w-5 h-5 text-game-accent" />
+                    <span>Compete Globally</span>
+                  </div>
+                </div>
+                
                 <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
                   Challenge your mind with our collection of puzzle games designed to enhance your cognitive abilities
                 </p>
+                
                 <div className="flex justify-center gap-4">
-                  <button className="px-8 py-3 bg-game-accent text-white rounded-full font-semibold hover:bg-game-accent/90 transition-colors duration-300 shadow-lg">
+                  <button className="group px-8 py-3 bg-game-accent text-white rounded-full font-semibold hover:bg-game-accent/90 transition-colors duration-300 shadow-lg flex items-center gap-2">
                     Explore Games
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>
-                  <button className="px-8 py-3 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors duration-300 backdrop-blur-sm">
+                  <button className="px-8 py-3 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors duration-300 backdrop-blur-sm border border-white/10">
                     Learn More
                   </button>
                 </div>
+              </div>
+
+              {/* Featured Stats */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+                {[
+                  { label: "Active Players", value: "10K+" },
+                  { label: "Games Available", value: "15+" },
+                  { label: "Daily Challenges", value: "5" }
+                ].map((stat, index) => (
+                  <div 
+                    key={index}
+                    className="bg-gradient-card backdrop-blur-sm border border-game-card-border rounded-2xl p-6 text-center"
+                  >
+                    <div className="text-3xl font-bold text-game-accent mb-2">{stat.value}</div>
+                    <div className="text-white/80">{stat.label}</div>
+                  </div>
+                ))}
               </div>
 
               {/* Games Grid */}
