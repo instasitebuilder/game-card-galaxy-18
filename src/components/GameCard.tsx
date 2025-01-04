@@ -15,6 +15,7 @@ const GameCard = ({ title }: GameCardProps) => {
     "Tic Tac Toe": "photo-1498936178812-4b2e558d2937",
     "Tower of Hanoi": "photo-1526374965328-7f61d4dc18c5",
     "Jigsaw Puzzle": "photo-1487887235947-a955ef187fcc",
+    "Mind Maze": "photo-1515879218367-8466d910aaa4",
   };
 
   const defaultImage = "photo-1498050108023-c5249f4df085";
