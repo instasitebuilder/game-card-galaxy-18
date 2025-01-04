@@ -1,4 +1,4 @@
-import { Home, GamepadIcon, CalendarDays, Info } from "lucide-react"
+import { Home, CalendarDays, Info, FileText } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -8,6 +8,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarHeader,
 } from "@/components/ui/sidebar"
 import { Link } from "react-router-dom"
 
@@ -23,24 +24,9 @@ const menuItems = [
     icon: Info,
   },
   {
-    title: "Live Games",
-    items: [
-      {
-        title: "Tetris",
-        url: "/tetris",
-        icon: GamepadIcon,
-      },
-      {
-        title: "Sudoku",
-        url: "/sudoku",
-        icon: GamepadIcon,
-      },
-      {
-        title: "Crossword",
-        url: "/crossword",
-        icon: GamepadIcon,
-      },
-    ],
+    title: "Terms & Services",
+    url: "/terms",
+    icon: FileText,
   },
   {
     title: "Future Games",
@@ -52,37 +38,33 @@ const menuItems = [
 export function AppSidebar() {
   return (
     <Sidebar>
+      <SidebarHeader className="p-4 border-b border-white/10">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-game-accent to-game-secondary flex items-center justify-center text-white font-bold text-xl">
+            B
+          </div>
+          <div className="flex flex-col">
+            <span className="font-semibold text-white">BrainGames</span>
+            <span className="text-xs text-white/60">Challenge Your Mind</span>
+          </div>
+        </div>
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-white/70">Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  {item.items ? (
-                    <>
-                      <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
-                      <SidebarMenu>
-                        {item.items.map((subItem) => (
-                          <SidebarMenuItem key={subItem.title}>
-                            <SidebarMenuButton asChild>
-                              <Link to={subItem.url}>
-                                <subItem.icon className="w-4 h-4" />
-                                <span>{subItem.title}</span>
-                              </Link>
-                            </SidebarMenuButton>
-                          </SidebarMenuItem>
-                        ))}
-                      </SidebarMenu>
-                    </>
-                  ) : (
-                    <SidebarMenuButton asChild>
-                      <Link to={item.url}>
-                        <item.icon className="w-4 h-4" />
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  )}
+                  <SidebarMenuButton
+                    asChild
+                    className="text-white hover:text-white hover:bg-white/10"
+                  >
+                    <Link to={item.url}>
+                      <item.icon className="w-4 h-4" />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
