@@ -1,41 +1,172 @@
 import React from "react";
-import { CalendarDays } from "lucide-react";
+import { CalendarDays, GameController, Clock } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const UPCOMING_GAMES = [
   {
-    title: "Memory Match",
+    title: "Puzzle Fusion",
     releaseDate: "Coming Soon",
-    description: "Test and improve your memory with this classic card matching game.",
+    description: "A revolutionary puzzle game blending multiple genres with dynamic gameplay and stunning visuals.",
+    image: "photo-1487058792275-0ad4aaf24ca7",
+    featured: true
   },
   {
-    title: "Word Scramble",
+    title: "Brainy Quest",
     releaseDate: "In Development",
-    description: "Unscramble letters to form words and expand your vocabulary.",
+    description: "Embark on an epic journey of mind-bending challenges.",
+    image: "photo-1518770660439-4636190af475"
   },
   {
-    title: "Math Challenge",
-    releaseDate: "Planning Phase",
-    description: "Sharpen your mathematical skills with engaging puzzles.",
+    title: "Cerebro Challenge",
+    releaseDate: "Coming Soon",
+    description: "Test your cognitive abilities in this innovative brain training game.",
+    image: "photo-1581091226825-a6a2a5aee158"
   },
+  {
+    title: "Logic Loop",
+    releaseDate: "Planning Phase",
+    description: "Connect the dots in this mesmerizing puzzle experience.",
+    image: "photo-1531297484001-80022131f5a1"
+  },
+  {
+    title: "Mind Marvels",
+    releaseDate: "Coming Soon",
+    description: "Discover the wonders of your mind through engaging puzzles.",
+    image: "photo-1498050108023-c5249f4df085"
+  },
+  {
+    title: "Neuron Nexus",
+    releaseDate: "In Development",
+    description: "Connect neural pathways in this unique brain training experience.",
+    image: "photo-1526374965328-7f61d4dc18c5"
+  },
+  {
+    title: "Riddle Realm",
+    releaseDate: "Coming Soon",
+    description: "Solve mysterious riddles in an enchanting world.",
+    image: "photo-1487058792275-0ad4aaf24ca7"
+  },
+  {
+    title: "Brain Twister",
+    releaseDate: "Planning Phase",
+    description: "Challenge yourself with mind-bending puzzles.",
+    image: "photo-1518770660439-4636190af475"
+  },
+  {
+    title: "Cognitive Circuit",
+    releaseDate: "Coming Soon",
+    description: "Train your brain with circuit-based challenges.",
+    image: "photo-1581091226825-a6a2a5aee158"
+  },
+  {
+    title: "Think Tanker",
+    releaseDate: "In Development",
+    description: "Dive deep into strategic thinking puzzles.",
+    image: "photo-1531297484001-80022131f5a1"
+  },
+  {
+    title: "IQ Odyssey",
+    releaseDate: "Coming Soon",
+    description: "Embark on an intelligence-boosting adventure.",
+    image: "photo-1498050108023-c5249f4df085"
+  },
+  {
+    title: "Puzzling Perceptions",
+    releaseDate: "Planning Phase",
+    description: "Challenge your perception with optical illusions.",
+    image: "photo-1526374965328-7f61d4dc18c5"
+  },
+  {
+    title: "Mental Matrix",
+    releaseDate: "Coming Soon",
+    description: "Navigate through complex mental challenges.",
+    image: "photo-1487058792275-0ad4aaf24ca7"
+  },
+  {
+    title: "MindSpark",
+    releaseDate: "In Development",
+    description: "Ignite your cognitive abilities with spark-based puzzles.",
+    image: "photo-1518770660439-4636190af475"
+  }
 ];
 
 const FutureGames = () => {
+  const { toast } = useToast();
+
+  const handleNotifyMe = (game: string) => {
+    toast({
+      title: "Notification Set",
+      description: `We'll notify you when ${game} is available!`,
+      duration: 3000,
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#2C3E50] via-[#3498DB] to-[#2980B9] p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-white mb-8 text-center">Upcoming Games</h1>
-        <div className="grid gap-6">
-          {UPCOMING_GAMES.map((game) => (
-            <div key={game.title} className="bg-white/10 rounded-lg p-6 backdrop-blur-sm hover:bg-white/20 transition-colors">
-              <div className="flex items-start justify-between">
-                <div>
-                  <h2 className="text-2xl font-bold text-white mb-2">{game.title}</h2>
-                  <p className="text-white/80 mb-4">{game.description}</p>
+    <div className="min-h-screen bg-gradient-game p-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex items-center gap-4 mb-12">
+          <CalendarDays className="w-8 h-8 text-game-accent" />
+          <h1 className="text-4xl font-bold text-white">Upcoming Games</h1>
+        </div>
+
+        {/* Featured Game */}
+        {UPCOMING_GAMES.filter(game => game.featured).map(game => (
+          <div key={game.title} className="mb-16 relative overflow-hidden rounded-2xl bg-gradient-card backdrop-blur-sm border border-game-card-border">
+            <div className="aspect-[21/9] relative overflow-hidden">
+              <img
+                src={`https://images.unsplash.com/${game.image}`}
+                alt={game.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-game-primary/90 via-game-primary/50 to-transparent" />
+            </div>
+            <div className="absolute bottom-0 w-full p-8">
+              <div className="flex items-center gap-2 text-game-accent mb-4">
+                <Clock className="w-5 h-5" />
+                <span className="text-sm font-medium">{game.releaseDate}</span>
+              </div>
+              <h2 className="text-4xl font-bold text-white mb-4">{game.title}</h2>
+              <p className="text-white/80 text-lg max-w-2xl mb-6">{game.description}</p>
+              <button
+                onClick={() => handleNotifyMe(game.title)}
+                className="inline-flex items-center gap-2 bg-game-accent text-white px-6 py-3 rounded-lg hover:bg-game-accent/90 transition-colors"
+              >
+                <GameController className="w-5 h-5" />
+                <span>Notify Me</span>
+              </button>
+            </div>
+          </div>
+        ))}
+
+        {/* Grid of Other Games */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {UPCOMING_GAMES.filter(game => !game.featured).map((game) => (
+            <div
+              key={game.title}
+              className="group relative overflow-hidden rounded-xl bg-gradient-card backdrop-blur-sm border border-game-card-border hover:scale-[1.02] transition-all duration-300"
+            >
+              <div className="aspect-[4/3] relative overflow-hidden">
+                <img
+                  src={`https://images.unsplash.com/${game.image}`}
+                  alt={game.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-game-primary/90 via-game-primary/50 to-transparent" />
+              </div>
+              <div className="absolute bottom-0 w-full p-6">
+                <div className="flex items-center gap-2 text-game-accent mb-2">
+                  <Clock className="w-4 h-4" />
+                  <span className="text-sm font-medium">{game.releaseDate}</span>
                 </div>
-                <div className="flex items-center text-white/60 text-sm">
-                  <CalendarDays className="w-4 h-4 mr-2" />
-                  {game.releaseDate}
-                </div>
+                <h3 className="text-2xl font-bold text-white mb-2">{game.title}</h3>
+                <p className="text-white/70 text-sm mb-4">{game.description}</p>
+                <button
+                  onClick={() => handleNotifyMe(game.title)}
+                  className="inline-flex items-center gap-2 text-game-accent hover:text-white transition-colors"
+                >
+                  <GameController className="w-4 h-4" />
+                  <span className="text-sm font-medium">Notify Me</span>
+                </button>
               </div>
             </div>
           ))}
