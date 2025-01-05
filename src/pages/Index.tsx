@@ -3,7 +3,8 @@ import CategorySection from "@/components/CategorySection";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import AdSpace from "@/components/ads/AdSpace";
-import { ArrowRight, Sparkles, Brain, Trophy } from "lucide-react";
+import { ArrowRight, Sparkles, Brain, Trophy, Gamepad } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const GAME_CATEGORIES = {
   "Featured Games": [
@@ -12,7 +13,8 @@ const GAME_CATEGORIES = {
     "Crossword Puzzles",
     "Tic Tac Toe",
     "Tower of Hanoi",
-    "Jigsaw Puzzle"
+    "Jigsaw Puzzle",
+    "Mind Maze"
   ],
 };
 
@@ -62,13 +64,19 @@ const Index = () => {
                 </p>
                 
                 <div className="flex justify-center gap-4">
-                  <button className="group px-8 py-3 bg-game-accent text-white rounded-full font-semibold hover:bg-game-accent/90 transition-colors duration-300 shadow-lg flex items-center gap-2">
-                    Explore Games
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </button>
-                  <button className="px-8 py-3 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors duration-300 backdrop-blur-sm border border-white/10">
+                  <Link 
+                    to="/future-games"
+                    className="group px-8 py-3 bg-game-accent text-white rounded-full font-semibold hover:bg-game-accent/90 transition-colors duration-300 shadow-lg flex items-center gap-2"
+                  >
+                    <Gamepad className="w-4 h-4" />
+                    Upcoming Games
+                  </Link>
+                  <Link
+                    to="/about" 
+                    className="px-8 py-3 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors duration-300 backdrop-blur-sm border border-white/10"
+                  >
                     Learn More
-                  </button>
+                  </Link>
                 </div>
               </div>
 

@@ -9,6 +9,8 @@ import TowerOfHanoi from "@/pages/TowerOfHanoi";
 import TicTacToe from "@/pages/TicTacToe";
 import JigsawPuzzle from "@/pages/JigsawPuzzle";
 import MindMaze from "@/pages/MindMaze";
+import FutureGames from "@/pages/FutureGames";
+import PuzzleFusion from "@/pages/PuzzleFusion";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +48,14 @@ const router = createBrowserRouter([
   {
     path: "/mind-maze",
     element: <MindMaze />,
+  },
+  {
+    path: "/future-games",
+    element: <FutureGames />,
+  },
+  {
+    path: "/puzzle-fusion",
+    element: <PuzzleFusion />,
   },
 ]);
 
