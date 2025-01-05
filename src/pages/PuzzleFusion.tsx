@@ -3,6 +3,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Gamepad, Sparkles, Users, Trophy, Lightbulb, Palette } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import GameLayout from "@/components/layouts/GameLayout";
+import Match3Game from "@/components/games/puzzle-fusion/Match3Game";
 
 type GameMode = "match3" | "jigsaw" | "sliding" | "logic" | null;
 type ThemeWorld = "fire" | "water" | "earth" | "air";
@@ -17,7 +18,7 @@ const PuzzleFusion = () => {
     setSelectedMode(mode);
     toast({
       title: "Game Mode Selected",
-      description: `${mode} mode activated! This feature is coming soon.`,
+      description: `${mode} mode activated!`,
       duration: 3000,
     });
   };
@@ -46,23 +47,34 @@ const PuzzleFusion = () => {
           </p>
         </div>
 
+        {/* Active Game Area */}
+        {selectedMode === "match3" && (
+          <div className="mb-12">
+            <Match3Game />
+          </div>
+        )}
+
         {/* Game Modes Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {[
-            { mode: "match3", title: "Match-3 Fusion", icon: Palette },
-            { mode: "jigsaw", title: "Jigsaw Journey", icon: Users },
-            { mode: "sliding", title: "Sliding Puzzler", icon: Trophy },
-            { mode: "logic", title: "Logic Master", icon: Lightbulb },
-          ].map(({ mode, title, icon: Icon }) => (
+            { mode: "match3", title: "Match-3 Fusion", icon: Palette, available: true },
+            { mode: "jigsaw", title: "Jigsaw Journey", icon: Users, available: false },
+            { mode: "sliding", title: "Sliding Puzzler", icon: Trophy, available: false },
+            { mode: "logic", title: "Logic Master", icon: Lightbulb, available: false },
+          ].map(({ mode, title, icon: Icon, available }) => (
             <button
               key={mode}
-              onClick={() => handleModeSelect(mode as GameMode)}
-              className="group relative overflow-hidden rounded-2xl bg-gradient-card backdrop-blur-sm border border-game-card-border p-6 text-left transition-all duration-300 hover:scale-105"
+              onClick={() => available && handleModeSelect(mode as GameMode)}
+              className={`group relative overflow-hidden rounded-2xl bg-gradient-card backdrop-blur-sm border border-game-card-border p-6 text-left transition-all duration-300 ${
+                available ? 'hover:scale-105' : 'opacity-75 cursor-not-allowed'
+              }`}
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-game-accent/10 rounded-full blur-3xl group-hover:bg-game-accent/20 transition-all duration-500" />
               <Icon className="w-8 h-8 text-game-accent mb-4" />
               <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-              <p className="text-white/60 text-sm">Coming Soon</p>
+              <p className="text-white/60 text-sm">
+                {available ? "Available Now" : "Coming Soon"}
+              </p>
             </button>
           ))}
         </div>
@@ -101,30 +113,14 @@ const PuzzleFusion = () => {
               </Button>
             </div>
             <div className="grid gap-4 text-white/80">
-              <p>• Select a game mode to begin your puzzle journey</p>
-              <p>• Each mode combines different puzzle mechanics</p>
-              <p>• Complete challenges to unlock new themes and power-ups</p>
-              <p>• Compete with friends or play cooperatively</p>
+              <p>• Select Match-3 Fusion mode to start playing</p>
+              <p>• Click on adjacent gems to swap them</p>
+              <p>• Match 3 or more gems of the same color</p>
+              <p>• Score points by creating matches</p>
+              <p>• Try to get the highest score possible!</p>
             </div>
           </div>
         )}
-
-        {/* Coming Soon Notice */}
-        <div className="text-center">
-          <Button
-            onClick={() => {
-              toast({
-                title: "Coming Soon!",
-                description: "Puzzle Fusion is currently in development. Stay tuned for the full release!",
-                duration: 5000,
-              });
-            }}
-            className="bg-game-accent hover:bg-game-accent/90 text-white px-8 py-6 rounded-xl text-lg font-semibold"
-          >
-            <Gamepad className="w-5 h-5 mr-2" />
-            Join the Waitlist
-          </Button>
-        </div>
       </div>
     </GameLayout>
   );
