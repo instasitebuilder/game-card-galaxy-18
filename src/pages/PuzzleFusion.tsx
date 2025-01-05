@@ -1,6 +1,6 @@
 import React from "react";
 import { useToast } from "@/hooks/use-toast";
-import { GameController } from "lucide-react";
+import { Gamepad } from "lucide-react";
 
 const PuzzleFusion = () => {
   const { toast } = useToast();
@@ -55,7 +55,7 @@ const PuzzleFusion = () => {
             duration: 3000,
           })}
         >
-          <GameController className="w-6 h-6" />
+          <Gamepad className="w-6 h-6" />
           <span>Notify Me on Release</span>
         </button>
       </div>

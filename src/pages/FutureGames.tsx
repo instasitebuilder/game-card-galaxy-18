@@ -1,5 +1,5 @@
 import React from "react";
-import { CalendarDays, GameController, Clock } from "lucide-react";
+import { CalendarDays, Gamepad, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const UPCOMING_GAMES = [
@@ -131,7 +131,7 @@ const FutureGames = () => {
                 onClick={() => handleNotifyMe(game.title)}
                 className="inline-flex items-center gap-2 bg-game-accent text-white px-6 py-3 rounded-lg hover:bg-game-accent/90 transition-colors"
               >
-                <GameController className="w-5 h-5" />
+                <Gamepad className="w-5 h-5" />
                 <span>Notify Me</span>
               </button>
             </div>
@@ -164,7 +164,7 @@ const FutureGames = () => {
                   onClick={() => handleNotifyMe(game.title)}
                   className="inline-flex items-center gap-2 text-game-accent hover:text-white transition-colors"
                 >
-                  <GameController className="w-4 h-4" />
+                  <Gamepad className="w-4 h-4" />
                   <span className="text-sm font-medium">Notify Me</span>
                 </button>
               </div>
