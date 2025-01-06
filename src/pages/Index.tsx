@@ -16,6 +16,11 @@ const GAME_CATEGORIES = {
     "Jigsaw Puzzle",
     "Mind Maze"
   ],
+  "Brain Training Games": [
+    "Cerebro Challenge",
+    "Brainy Quest",
+    "Puzzle Fusion"
+  ],
 };
 
 const Index = () => {
@@ -65,11 +70,11 @@ const Index = () => {
                 
                 <div className="flex justify-center gap-4">
                   <Link 
-                    to="/future-games"
+                    to="/cerebro-challenge"
                     className="group px-8 py-3 bg-game-accent text-white rounded-full font-semibold hover:bg-game-accent/90 transition-colors duration-300 shadow-lg flex items-center gap-2"
                   >
-                    <Gamepad className="w-4 h-4" />
-                    Upcoming Games
+                    <Brain className="w-4 h-4" />
+                    Play Now
                   </Link>
                   <Link
                     to="/about" 

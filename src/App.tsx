@@ -12,6 +12,7 @@ import MindMaze from "@/pages/MindMaze";
 import FutureGames from "@/pages/FutureGames";
 import PuzzleFusion from "@/pages/PuzzleFusion";
 import BrainyQuest from "@/pages/BrainyQuest";
+import CerebroChallenge from "@/pages/CerebroChallenge";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
   {
     path: "/brainy-quest",
     element: <BrainyQuest />,
+  },
+  {
+    path: "/cerebro-challenge",
+    element: <CerebroChallenge />,
   },
 ]);
 
