@@ -4,10 +4,17 @@ import { useToast } from "@/hooks/use-toast";
 
 const UPCOMING_GAMES = [
   {
-    title: "Puzzle Fusion",
+    title: "Cerebro Challenge",
     releaseDate: "Coming Soon",
-    description: "A revolutionary puzzle game blending multiple genres with dynamic gameplay and stunning visuals.",
-    image: "photo-1487058792275-0ad4aaf24ca7",
+    description: "A high-octane, brain-training game designed to test and enhance cognitive skills through memory, logic, vocabulary, and quick thinking challenges. Features adaptive difficulty, multiple game modes, and global leaderboards.",
+    image: "photo-1581091226825-a6a2a5aee158",
+    features: [
+      "Memory Match - Test your recall abilities",
+      "Logic Puzzles - Solve complex riddles",
+      "Vocabulary Blitz - Master word challenges",
+      "Quick Math - Solve under pressure",
+      "Spatial Reasoning - Navigate visual puzzles"
+    ],
     featured: true
   },
   {
@@ -127,6 +134,16 @@ const FutureGames = () => {
               </div>
               <h2 className="text-4xl font-bold text-white mb-4">{game.title}</h2>
               <p className="text-white/80 text-lg max-w-2xl mb-6">{game.description}</p>
+              {game.features && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  {game.features.map((feature, index) => (
+                    <div key={index} className="flex items-center gap-2 text-white/70">
+                      <div className="w-2 h-2 bg-game-accent rounded-full"></div>
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
               <button
                 onClick={() => handleNotifyMe(game.title)}
                 className="inline-flex items-center gap-2 bg-game-accent text-white px-6 py-3 rounded-lg hover:bg-game-accent/90 transition-colors"
