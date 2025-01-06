@@ -4,9 +4,12 @@ import { Gamepad, Sparkles, Users, Trophy, Lightbulb, Palette } from "lucide-rea
 import { Button } from "@/components/ui/button";
 import GameLayout from "@/components/layouts/GameLayout";
 import Match3Game from "@/components/games/puzzle-fusion/Match3Game";
+import JigsawPuzzle from "@/components/games/puzzle-fusion/JigsawPuzzle";
+import SlidingPuzzle from "@/components/games/puzzle-fusion/SlidingPuzzle";
+import LogicPuzzle from "@/components/games/puzzle-fusion/LogicPuzzle";
 
-type GameMode = "match3" | "jigsaw" | "sliding" | "logic" | null;
-type ThemeWorld = "fire" | "water" | "earth" | "air";
+type GameMode = 'match3' | 'jigsaw' | 'sliding' | 'logic' | null;
+type ThemeWorld = 'fire' | 'water' | 'earth' | 'air';
 
 const PuzzleFusion = () => {
   const { toast } = useToast();
@@ -32,6 +35,21 @@ const PuzzleFusion = () => {
     });
   };
 
+  const renderSelectedGame = () => {
+    switch (selectedMode) {
+      case 'match3':
+        return <Match3Game />;
+      case 'jigsaw':
+        return <JigsawPuzzle />;
+      case 'sliding':
+        return <SlidingPuzzle />;
+      case 'logic':
+        return <LogicPuzzle />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <GameLayout>
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -48,19 +66,19 @@ const PuzzleFusion = () => {
         </div>
 
         {/* Active Game Area */}
-        {selectedMode === "match3" && (
+        {selectedMode && (
           <div className="mb-12">
-            <Match3Game />
+            {renderSelectedGame()}
           </div>
         )}
 
         {/* Game Modes Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {[
-            { mode: "match3", title: "Match-3 Fusion", icon: Palette, available: true },
-            { mode: "jigsaw", title: "Jigsaw Journey", icon: Users, available: false },
-            { mode: "sliding", title: "Sliding Puzzler", icon: Trophy, available: false },
-            { mode: "logic", title: "Logic Master", icon: Lightbulb, available: false },
+            { mode: 'match3', title: 'Match-3 Fusion', icon: Palette, available: true },
+            { mode: 'jigsaw', title: 'Jigsaw Journey', icon: Users, available: true },
+            { mode: 'sliding', title: 'Sliding Puzzler', icon: Trophy, available: true },
+            { mode: 'logic', title: 'Logic Master', icon: Lightbulb, available: true },
           ].map(({ mode, title, icon: Icon, available }) => (
             <button
               key={mode}
@@ -73,7 +91,7 @@ const PuzzleFusion = () => {
               <Icon className="w-8 h-8 text-game-accent mb-4" />
               <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
               <p className="text-white/60 text-sm">
-                {available ? "Available Now" : "Coming Soon"}
+                {available ? 'Available Now' : 'Coming Soon'}
               </p>
             </button>
           ))}
