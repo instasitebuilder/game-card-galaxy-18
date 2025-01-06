@@ -11,6 +11,7 @@ import JigsawPuzzle from "@/pages/JigsawPuzzle";
 import MindMaze from "@/pages/MindMaze";
 import FutureGames from "@/pages/FutureGames";
 import PuzzleFusion from "@/pages/PuzzleFusion";
+import BrainyQuest from "@/pages/BrainyQuest";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
   {
     path: "/puzzle-fusion",
     element: <PuzzleFusion />,
+  },
+  {
+    path: "/brainy-quest",
+    element: <BrainyQuest />,
   },
 ]);
 
