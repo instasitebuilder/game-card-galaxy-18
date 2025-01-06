@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import GameInstructions from './GameInstructions';
 
 type GemType = 'red' | 'blue' | 'green' | 'yellow' | 'purple';
 type BoardType = GemType[][];
@@ -137,6 +138,8 @@ const Match3Game = () => {
   return (
     <div className="flex flex-col items-center gap-8 p-4">
       <div className="text-2xl font-bold text-white">Score: {score}</div>
+      
+      <GameInstructions gameType="match3" />
       
       <div className="grid gap-1 p-4 bg-gradient-card backdrop-blur-sm rounded-xl border border-game-card-border">
         {board.map((row, x) => (

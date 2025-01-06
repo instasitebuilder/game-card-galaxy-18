@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import GameInstructions from './GameInstructions';
 
 const SlidingPuzzle = () => {
   const { toast } = useToast();
@@ -47,6 +48,9 @@ const SlidingPuzzle = () => {
   return (
     <div className="flex flex-col items-center gap-8 p-4">
       <div className="text-2xl font-bold text-white">Sliding Puzzle</div>
+      
+      <GameInstructions gameType="sliding" />
+      
       <div className="grid grid-cols-3 gap-1 p-4 bg-gradient-card backdrop-blur-sm rounded-xl border border-game-card-border">
         {tiles.map((tile, index) => (
           <motion.button

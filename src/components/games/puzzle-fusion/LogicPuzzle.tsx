@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import GameInstructions from './GameInstructions';
 
 const LogicPuzzle = () => {
   const { toast } = useToast();
@@ -26,6 +27,9 @@ const LogicPuzzle = () => {
   return (
     <div className="flex flex-col items-center gap-8 p-4">
       <div className="text-2xl font-bold text-white">Logic Master</div>
+      
+      <GameInstructions gameType="logic" />
+      
       <div className="relative p-4 bg-gradient-card backdrop-blur-sm rounded-xl border border-game-card-border">
         <div className="grid grid-cols-6 gap-1">
           <div className="w-8 h-8" /> {/* Empty corner */}

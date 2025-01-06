@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import GameInstructions from './GameInstructions';
 
 const JigsawPuzzle = () => {
   const { toast } = useToast();
@@ -30,6 +31,9 @@ const JigsawPuzzle = () => {
   return (
     <div className="flex flex-col items-center gap-8 p-4">
       <div className="text-2xl font-bold text-white">Jigsaw Puzzle</div>
+      
+      <GameInstructions gameType="jigsaw" />
+      
       <div className="relative w-[400px] h-[400px] bg-gradient-card backdrop-blur-sm rounded-xl border border-game-card-border">
         {pieces.map((piece) => (
           <motion.div
