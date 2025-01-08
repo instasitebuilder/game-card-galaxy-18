@@ -10,16 +10,28 @@ interface MemoryMatchProps {
 
 const MemoryMatch = ({ level, onScore, onComplete }: MemoryMatchProps) => {
   const { toast } = useToast();
-  const [pattern, setPattern] = useState<number[]>([]);
-  const [userPattern, setUserPattern] = useState<number[]>([]);
+  const [pattern, setPattern] = useState<boolean[][]>(Array(9).fill(Array(9).fill(false)));
+  const [userPattern, setUserPattern] = useState<boolean[][]>(Array(9).fill(Array(9).fill(false)));
   const [isShowingPattern, setIsShowingPattern] = useState(true);
   const [gameStarted, setGameStarted] = useState(false);
 
   const generatePattern = () => {
-    const length = Math.min(3 + level, 9);
-    const newPattern = Array.from({ length }, () => Math.floor(Math.random() * 9));
+    // Create a new pattern based on level difficulty
+    const cellsToActivate = Math.min(3 + level * 2, 20);
+    const newPattern = Array(9).fill(null).map(() => Array(9).fill(false));
+    
+    let activatedCells = 0;
+    while (activatedCells < cellsToActivate) {
+      const row = Math.floor(Math.random() * 9);
+      const col = Math.floor(Math.random() * 9);
+      if (!newPattern[row][col]) {
+        newPattern[row][col] = true;
+        activatedCells++;
+      }
+    }
+    
     setPattern(newPattern);
-    setUserPattern([]);
+    setUserPattern(Array(9).fill(null).map(() => Array(9).fill(false)));
     setIsShowingPattern(true);
     setGameStarted(true);
   };
@@ -28,31 +40,22 @@ const MemoryMatch = ({ level, onScore, onComplete }: MemoryMatchProps) => {
     if (isShowingPattern) {
       const timer = setTimeout(() => {
         setIsShowingPattern(false);
-      }, 3000);
+      }, 3000 + (level * 500)); // More time for higher levels
       return () => clearTimeout(timer);
     }
-  }, [isShowingPattern]);
+  }, [isShowingPattern, level]);
 
-  const handleNumberClick = (number: number) => {
+  const handleCellClick = (row: number, col: number) => {
     if (isShowingPattern || !gameStarted) return;
 
-    const newUserPattern = [...userPattern, number];
+    const newUserPattern = userPattern.map(r => [...r]);
+    newUserPattern[row][col] = !newUserPattern[row][col];
     setUserPattern(newUserPattern);
 
-    // Check if the number is correct
-    if (newUserPattern[newUserPattern.length - 1] !== pattern[newUserPattern.length - 1]) {
-      toast({
-        title: "Wrong pattern!",
-        description: "Try again!",
-        variant: "destructive",
-      });
-      setGameStarted(false);
-      return;
-    }
-
-    // Check if pattern is complete
-    if (newUserPattern.length === pattern.length) {
-      const score = pattern.length * 10;
+    // Check if patterns match after each click
+    const patternsMatch = checkPatterns(newUserPattern, pattern);
+    if (patternsMatch) {
+      const score = calculateScore(level, pattern);
       onScore(score);
       toast({
         title: "Perfect match!",
@@ -60,6 +63,20 @@ const MemoryMatch = ({ level, onScore, onComplete }: MemoryMatchProps) => {
       });
       onComplete();
     }
+  };
+
+  const checkPatterns = (userPat: boolean[][], targetPat: boolean[][]) => {
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (userPat[i][j] !== targetPat[i][j]) return false;
+      }
+    }
+    return true;
+  };
+
+  const calculateScore = (currentLevel: number, targetPattern: boolean[][]) => {
+    const activeCells = targetPattern.flat().filter(cell => cell).length;
+    return activeCells * 10 * currentLevel;
   };
 
   return (
@@ -70,21 +87,23 @@ const MemoryMatch = ({ level, onScore, onComplete }: MemoryMatchProps) => {
         </Button>
       )}
 
-      <div className="grid grid-cols-3 gap-4 max-w-md mx-auto">
-        {Array.from({ length: 9 }).map((_, index) => (
-          <button
-            key={index}
-            onClick={() => handleNumberClick(index)}
-            disabled={isShowingPattern || !gameStarted}
-            className={`
-              h-24 rounded-lg transition-all duration-300
-              ${isShowingPattern && pattern.includes(index)
-                ? "bg-game-accent"
-                : "bg-game-surface hover:bg-game-accent/20"}
-              ${userPattern.includes(index) ? "bg-game-accent/50" : ""}
-              disabled:opacity-50
-            `}
-          />
+      <div className="grid grid-cols-9 gap-1 max-w-2xl mx-auto aspect-square">
+        {Array(9).fill(null).map((_, row) => (
+          Array(9).fill(null).map((_, col) => (
+            <button
+              key={`${row}-${col}`}
+              onClick={() => handleCellClick(row, col)}
+              disabled={isShowingPattern || !gameStarted}
+              className={`
+                aspect-square rounded-sm transition-all duration-300
+                ${isShowingPattern && pattern[row][col]
+                  ? "bg-game-accent"
+                  : "bg-game-surface hover:bg-game-accent/20"}
+                ${userPattern[row][col] ? "bg-game-accent/50" : ""}
+                disabled:opacity-50
+              `}
+            />
+          ))
         ))}
       </div>
 
