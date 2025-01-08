@@ -1,29 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { And, Or, X, RotateCcw, Play, Pause, RefreshCw } from "lucide-react";
-
-interface LogicGate {
-  id: string;
-  type: "AND" | "OR" | "NOT" | "XOR";
-  position: { x: number; y: number };
-  inputs: boolean[];
-  output: boolean;
-}
-
-interface Connection {
-  from: string;
-  to: string;
-}
+import { CircleDot, Hash, X, RotateCcw } from "lucide-react";
+import LogicGate from "@/components/logic-loop/LogicGate";
+import Controls from "@/components/logic-loop/Controls";
+import type { LogicGate as LogicGateType, Connection } from "@/components/logic-loop/types";
 
 const LogicLoop: React.FC = () => {
-  const [gates, setGates] = useState<LogicGate[]>([]);
+  const [gates, setGates] = useState<LogicGateType[]>([]);
   const [connections, setConnections] = useState<Connection[]>([]);
   const [selectedGate, setSelectedGate] = useState<string | null>(null);
   const [isSimulating, setIsSimulating] = useState(false);
   const { toast } = useToast();
 
-  const addGate = (type: LogicGate["type"]) => {
-    const newGate: LogicGate = {
+  const addGate = (type: LogicGateType["type"]) => {
+    const newGate: LogicGateType = {
       id: `gate-${Date.now()}`,
       type,
       position: { x: 100, y: 100 },
@@ -37,7 +27,6 @@ const LogicLoop: React.FC = () => {
     if (selectedGate === null) {
       setSelectedGate(gateId);
     } else if (selectedGate !== gateId) {
-      // Create connection
       const newConnection: Connection = {
         from: selectedGate,
         to: gateId,
@@ -53,7 +42,7 @@ const LogicLoop: React.FC = () => {
     }
   };
 
-  const calculateOutput = (gate: LogicGate): boolean => {
+  const calculateOutput = (gate: LogicGateType): boolean => {
     switch (gate.type) {
       case "AND":
         return gate.inputs[0] && gate.inputs[1];
@@ -95,89 +84,42 @@ const LogicLoop: React.FC = () => {
             Create logical circuits by connecting gates and solving puzzles.
           </p>
           
-          {/* Controls */}
           <div className="flex gap-4 mb-8">
-            <button
-              onClick={() => addGate("AND")}
-              className="flex items-center gap-2 bg-game-accent px-4 py-2 rounded-lg text-white hover:bg-game-accent/90 transition-colors"
-            >
-              <And size={20} />
-              Add AND Gate
-            </button>
-            <button
-              onClick={() => addGate("OR")}
-              className="flex items-center gap-2 bg-game-accent px-4 py-2 rounded-lg text-white hover:bg-game-accent/90 transition-colors"
-            >
-              <Or size={20} />
-              Add OR Gate
-            </button>
-            <button
-              onClick={() => addGate("NOT")}
-              className="flex items-center gap-2 bg-game-accent px-4 py-2 rounded-lg text-white hover:bg-game-accent/90 transition-colors"
-            >
-              <RotateCcw size={20} />
-              Add NOT Gate
-            </button>
-            <button
-              onClick={() => addGate("XOR")}
-              className="flex items-center gap-2 bg-game-accent px-4 py-2 rounded-lg text-white hover:bg-game-accent/90 transition-colors"
-            >
-              <X size={20} />
-              Add XOR Gate
-            </button>
+            {[
+              { type: "AND", icon: CircleDot },
+              { type: "OR", icon: Hash },
+              { type: "NOT", icon: RotateCcw },
+              { type: "XOR", icon: X },
+            ].map((gate) => (
+              <button
+                key={gate.type}
+                onClick={() => addGate(gate.type as LogicGateType["type"])}
+                className="flex items-center gap-2 bg-game-accent px-4 py-2 rounded-lg text-white hover:bg-game-accent/90 transition-colors"
+              >
+                <gate.icon size={20} />
+                Add {gate.type} Gate
+              </button>
+            ))}
           </div>
 
-          {/* Simulation Controls */}
-          <div className="flex gap-4 mb-8">
-            <button
-              onClick={simulateCircuit}
-              disabled={isSimulating}
-              className="flex items-center gap-2 bg-green-600 px-4 py-2 rounded-lg text-white hover:bg-green-700 transition-colors disabled:opacity-50"
-            >
-              <Play size={20} />
-              Simulate
-            </button>
-            <button
-              onClick={() => setIsSimulating(false)}
-              disabled={!isSimulating}
-              className="flex items-center gap-2 bg-yellow-600 px-4 py-2 rounded-lg text-white hover:bg-yellow-700 transition-colors disabled:opacity-50"
-            >
-              <Pause size={20} />
-              Pause
-            </button>
-            <button
-              onClick={resetCircuit}
-              className="flex items-center gap-2 bg-red-600 px-4 py-2 rounded-lg text-white hover:bg-red-700 transition-colors"
-            >
-              <RefreshCw size={20} />
-              Reset
-            </button>
-          </div>
+          <Controls
+            onSimulate={simulateCircuit}
+            onPause={() => setIsSimulating(false)}
+            onReset={resetCircuit}
+            isSimulating={isSimulating}
+          />
         </div>
 
-        {/* Game Board */}
         <div className="bg-game-surface p-8 rounded-xl border border-game-card-border min-h-[600px] relative">
-          {/* Gates */}
           {gates.map((gate) => (
-            <div
+            <LogicGate
               key={gate.id}
-              onClick={() => handleGateClick(gate.id)}
-              className={`absolute p-4 bg-game-accent rounded-lg cursor-pointer transform transition-transform hover:scale-105 ${
-                selectedGate === gate.id ? "ring-2 ring-white" : ""
-              }`}
-              style={{
-                left: gate.position.x,
-                top: gate.position.y,
-              }}
-            >
-              <div className="text-white font-bold">{gate.type}</div>
-              <div className="text-white/80 text-sm">
-                Output: {gate.output ? "1" : "0"}
-              </div>
-            </div>
+              {...gate}
+              onClick={handleGateClick}
+              isSelected={selectedGate === gate.id}
+            />
           ))}
 
-          {/* Connections */}
           {connections.map((conn, index) => {
             const fromGate = gates.find(g => g.id === conn.from);
             const toGate = gates.find(g => g.id === conn.to);
