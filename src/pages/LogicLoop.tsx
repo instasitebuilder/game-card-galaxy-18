@@ -80,6 +80,36 @@ const LogicLoop: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-4">Logic Loop</h1>
+          
+          {/* How to Play Guide */}
+          <div className="bg-black/20 rounded-lg p-6 mb-8 text-white/90">
+            <h2 className="text-2xl font-semibold mb-4">How to Play</h2>
+            <ul className="space-y-3 list-disc pl-6">
+              <li>Click the gate buttons above to add logic gates to your circuit</li>
+              <li>Each gate type performs a different logical operation:
+                <ul className="pl-6 mt-2 space-y-2">
+                  <li><CircleDot className="inline mr-2" /> AND gate: Output is 1 only if both inputs are 1</li>
+                  <li><Hash className="inline mr-2" /> OR gate: Output is 1 if at least one input is 1</li>
+                  <li><RotateCcw className="inline mr-2" /> NOT gate: Inverts the input (0 becomes 1, 1 becomes 0)</li>
+                  <li><X className="inline mr-2" /> XOR gate: Output is 1 if inputs are different</li>
+                </ul>
+              </li>
+              <li>Connect gates by:
+                <ol className="pl-6 mt-2 space-y-2">
+                  <li>1. Click on a source gate</li>
+                  <li>2. Click on a target gate to create a connection</li>
+                </ol>
+              </li>
+              <li>Use the controls below to:
+                <ul className="pl-6 mt-2 space-y-2">
+                  <li><Play className="inline mr-2" /> Simulate: Run your circuit</li>
+                  <li><Pause className="inline mr-2" /> Pause: Pause the simulation</li>
+                  <li><RefreshCw className="inline mr-2" /> Reset: Clear all outputs</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
           <p className="text-white/80 mb-6">
             Create logical circuits by connecting gates and solving puzzles.
           </p>
