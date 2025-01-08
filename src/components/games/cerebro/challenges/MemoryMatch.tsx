@@ -14,9 +14,9 @@ const MemoryMatch = ({ level, onScore, onComplete }: MemoryMatchProps) => {
   const [userPattern, setUserPattern] = useState<boolean[][]>(Array(9).fill(Array(9).fill(false)));
   const [isShowingPattern, setIsShowingPattern] = useState(true);
   const [gameStarted, setGameStarted] = useState(false);
+  const [memorizeTimeLeft, setMemorizeTimeLeft] = useState(10);
 
   const generatePattern = () => {
-    // Create a new pattern based on level difficulty
     const cellsToActivate = Math.min(3 + level * 2, 20);
     const newPattern = Array(9).fill(null).map(() => Array(9).fill(false));
     
@@ -34,16 +34,25 @@ const MemoryMatch = ({ level, onScore, onComplete }: MemoryMatchProps) => {
     setUserPattern(Array(9).fill(null).map(() => Array(9).fill(false)));
     setIsShowingPattern(true);
     setGameStarted(true);
+    setMemorizeTimeLeft(10);
   };
 
   useEffect(() => {
-    if (isShowingPattern) {
-      const timer = setTimeout(() => {
-        setIsShowingPattern(false);
-      }, 3000 + (level * 500)); // More time for higher levels
-      return () => clearTimeout(timer);
+    if (isShowingPattern && gameStarted) {
+      const timer = setInterval(() => {
+        setMemorizeTimeLeft((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            setIsShowingPattern(false);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(timer);
     }
-  }, [isShowingPattern, level]);
+  }, [isShowingPattern, gameStarted]);
 
   const handleCellClick = (row: number, col: number) => {
     if (isShowingPattern || !gameStarted) return;
@@ -52,7 +61,6 @@ const MemoryMatch = ({ level, onScore, onComplete }: MemoryMatchProps) => {
     newUserPattern[row][col] = !newUserPattern[row][col];
     setUserPattern(newUserPattern);
 
-    // Check if patterns match after each click
     const patternsMatch = checkPatterns(newUserPattern, pattern);
     if (patternsMatch) {
       const score = calculateScore(level, pattern);
@@ -109,7 +117,7 @@ const MemoryMatch = ({ level, onScore, onComplete }: MemoryMatchProps) => {
 
       {isShowingPattern && gameStarted && (
         <div className="text-center text-white/80">
-          Memorize the pattern...
+          Memorize the pattern... {memorizeTimeLeft}s remaining
         </div>
       )}
 
