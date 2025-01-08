@@ -13,6 +13,7 @@ import FutureGames from "@/pages/FutureGames";
 import PuzzleFusion from "@/pages/PuzzleFusion";
 import BrainyQuest from "@/pages/BrainyQuest";
 import CerebroChallenge from "@/pages/CerebroChallenge";
+import LogicLoop from "@/pages/LogicLoop";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
   {
     path: "/cerebro-challenge",
     element: <CerebroChallenge />,
+  },
+  {
+    path: "/logic-loop",
+    element: <LogicLoop />,
   },
 ]);
 
