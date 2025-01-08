@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { CircleDot, Hash, X, RotateCcw } from "lucide-react";
+import { CircleDot, Hash, X, RotateCcw, Play, Pause, RefreshCw } from "lucide-react";
 import LogicGate from "@/components/logic-loop/LogicGate";
 import Controls from "@/components/logic-loop/Controls";
 import type { LogicGate as LogicGateType, Connection } from "@/components/logic-loop/types";
