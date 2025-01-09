@@ -1,22 +1,65 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { CircleDot, Hash, X, RotateCcw, Play, Pause, RefreshCw } from "lucide-react";
+import { CircleDot, Hash, X, RotateCcw, Play, Pause, RefreshCw, Trophy } from "lucide-react";
 import LogicGate from "@/components/logic-loop/LogicGate";
 import Controls from "@/components/logic-loop/Controls";
 import type { LogicGate as LogicGateType, Connection } from "@/components/logic-loop/types";
+
+interface Challenge {
+  id: number;
+  name: string;
+  description: string;
+  targetOutput: boolean[];
+  maxGates: number;
+}
+
+const challenges: Challenge[] = [
+  {
+    id: 1,
+    name: "Basic AND",
+    description: "Create a circuit that outputs 1 only when both inputs are 1",
+    targetOutput: [false, false, false, true], // For input combinations: 00, 01, 10, 11
+    maxGates: 1,
+  },
+  {
+    id: 2,
+    name: "NOT Gate Challenge",
+    description: "Invert the input signal",
+    targetOutput: [true, false], // For input: 0, 1
+    maxGates: 1,
+  },
+  {
+    id: 3,
+    name: "OR Logic",
+    description: "Output 1 if any input is 1",
+    targetOutput: [false, true, true, true], // For input combinations: 00, 01, 10, 11
+    maxGates: 1,
+  },
+];
 
 const LogicLoop: React.FC = () => {
   const [gates, setGates] = useState<LogicGateType[]>([]);
   const [connections, setConnections] = useState<Connection[]>([]);
   const [selectedGate, setSelectedGate] = useState<string | null>(null);
   const [isSimulating, setIsSimulating] = useState(false);
+  const [currentLevel, setCurrentLevel] = useState(0);
+  const [score, setScore] = useState(0);
   const { toast } = useToast();
 
   const addGate = (type: LogicGateType["type"]) => {
+    if (gates.length >= challenges[currentLevel].maxGates) {
+      toast({
+        title: "Gate Limit Reached",
+        description: `You can only use ${challenges[currentLevel].maxGates} gates in this level`,
+        variant: "destructive",
+      });
+      return;
+    }
+
     const newGate: LogicGateType = {
       id: `gate-${Date.now()}`,
       type,
-      position: { x: 100, y: 100 },
+      position: { x: Math.random() * 400 + 100, y: Math.random() * 200 + 100 },
       inputs: type === "NOT" ? [false] : [false, false],
       output: false,
     };
@@ -37,7 +80,6 @@ const LogicLoop: React.FC = () => {
       toast({
         title: "Connection Created",
         description: "Gates connected successfully!",
-        duration: 2000,
       });
     }
   };
@@ -57,6 +99,39 @@ const LogicLoop: React.FC = () => {
     }
   };
 
+  const checkSolution = () => {
+    const currentChallenge = challenges[currentLevel];
+    const outputs = gates.map(gate => gate.output);
+    
+    const isCorrect = outputs.some(output => 
+      currentChallenge.targetOutput.includes(output)
+    );
+
+    if (isCorrect) {
+      const newScore = score + 100;
+      setScore(newScore);
+      toast({
+        title: "Level Complete! 🎉",
+        description: `You earned 100 points! Total score: ${newScore}`,
+      });
+      
+      if (currentLevel < challenges.length - 1) {
+        setCurrentLevel(prev => prev + 1);
+      } else {
+        toast({
+          title: "Congratulations! 🏆",
+          description: "You've completed all levels!",
+        });
+      }
+    } else {
+      toast({
+        title: "Try Again",
+        description: "Your circuit output doesn't match the target output",
+        variant: "destructive",
+      });
+    }
+  };
+
   const simulateCircuit = () => {
     setIsSimulating(true);
     const updatedGates = gates.map(gate => ({
@@ -64,6 +139,7 @@ const LogicLoop: React.FC = () => {
       output: calculateOutput(gate),
     }));
     setGates(updatedGates);
+    checkSolution();
   };
 
   const resetCircuit = () => {
@@ -76,10 +152,38 @@ const LogicLoop: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-game p-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 p-8">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-4">Logic Loop</h1>
+          <div className="flex justify-between items-center">
+            <h1 className="text-4xl font-bold text-white mb-4">Logic Loop</h1>
+            <div className="flex items-center gap-4">
+              <div className="bg-gray-800 px-4 py-2 rounded-lg">
+                <span className="text-white">Score: {score}</span>
+              </div>
+              <div className="bg-gray-800 px-4 py-2 rounded-lg">
+                <span className="text-white">Level: {currentLevel + 1}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Current Challenge Info */}
+          <div className="bg-gray-800/50 rounded-lg p-6 mb-8">
+            <h2 className="text-2xl font-semibold text-white mb-2">
+              {challenges[currentLevel].name}
+            </h2>
+            <p className="text-gray-300">
+              {challenges[currentLevel].description}
+            </p>
+            <div className="mt-4 text-gray-300">
+              <span className="font-semibold">Target Output: </span>
+              {challenges[currentLevel].targetOutput.map((output, index) => (
+                <span key={index} className="mx-1">
+                  {output ? "1" : "0"}
+                </span>
+              ))}
+            </div>
+          </div>
           
           {/* How to Play Guide */}
           <div className="bg-black/20 rounded-lg p-6 mb-8 text-white/90">
@@ -110,10 +214,6 @@ const LogicLoop: React.FC = () => {
             </ul>
           </div>
 
-          <p className="text-white/80 mb-6">
-            Create logical circuits by connecting gates and solving puzzles.
-          </p>
-          
           <div className="flex gap-4 mb-8">
             {[
               { type: "AND", icon: CircleDot },
@@ -124,7 +224,7 @@ const LogicLoop: React.FC = () => {
               <button
                 key={gate.type}
                 onClick={() => addGate(gate.type as LogicGateType["type"])}
-                className="flex items-center gap-2 bg-game-accent px-4 py-2 rounded-lg text-white hover:bg-game-accent/90 transition-colors"
+                className="flex items-center gap-2 bg-gray-700 px-4 py-2 rounded-lg text-white hover:bg-gray-600 transition-colors"
               >
                 <gate.icon size={20} />
                 Add {gate.type} Gate
@@ -140,7 +240,7 @@ const LogicLoop: React.FC = () => {
           />
         </div>
 
-        <div className="bg-game-surface p-8 rounded-xl border border-game-card-border min-h-[600px] relative">
+        <div className="bg-gray-800/30 p-8 rounded-xl border border-gray-700 min-h-[600px] relative">
           {gates.map((gate) => (
             <LogicGate
               key={gate.id}
