@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { Brain, Trophy, Gamepad, Sparkles, Users, Timer, Star, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CategorySection from "@/components/CategorySection";
-import AdSpace from "@/components/ads/AdSpace";
 import MainLayout from "@/components/layouts/MainLayout";
 
 const FEATURED_MODES = [
@@ -50,8 +49,6 @@ const Index = () => {
   return (
     <MainLayout>
       <div className="relative bg-gradient-to-b from-gray-900 via-gray-800 to-black text-white">
-        <AdSpace position="top" />
-
         <div className="mx-auto max-w-7xl p-8">
           {/* Hero Section */}
           <motion.div
@@ -147,8 +144,6 @@ const Index = () => {
             </Button>
           </motion.div>
         </div>
-
-        <AdSpace position="bottom" />
       </div>
     </MainLayout>
   );
