@@ -13,8 +13,8 @@ import {
   Gamepad2,
   Sparkles,
   Zap,
-  Binary,
-  CircuitBoard
+  CircuitBoard,
+  CircleDot
 } from "lucide-react";
 
 interface NavItem {
@@ -35,6 +35,7 @@ const navItems: NavItem[] = [
   { path: "/brainy-quest", label: "Brainy Quest", icon: <Brain className="w-5 h-5" /> },
   { path: "/cerebro-challenge", label: "Cerebro Challenge", icon: <Sparkles className="w-5 h-5" /> },
   { path: "/logic-loop", label: "Logic Loop", icon: <CircuitBoard className="w-5 h-5" /> },
+  { path: "/go-game", label: "Go Game", icon: <CircleDot className="w-5 h-5" /> },
 ];
 
 const GameNavigation = () => {

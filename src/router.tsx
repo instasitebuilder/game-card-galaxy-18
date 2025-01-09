@@ -11,6 +11,7 @@ import PuzzleFusion from "./pages/PuzzleFusion";
 import BrainyQuest from "./pages/BrainyQuest";
 import CerebroChallenge from "./pages/CerebroChallenge";
 import LogicLoop from "./pages/LogicLoop";
+import GoGame from "./pages/GoGame";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
   {
     path: "/logic-loop",
     element: <LogicLoop />,
+  },
+  {
+    path: "/go-game",
+    element: <GoGame />,
   },
 ]);
 
