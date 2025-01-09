@@ -1,10 +1,33 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Brain, Trophy, Gamepad, Sparkles, Users, Timer, Star, Gift } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import CategorySection from "@/components/CategorySection";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import AdSpace from "@/components/ads/AdSpace";
-import { ArrowRight, Sparkles, Brain, Trophy, Gamepad } from "lucide-react";
-import { Link } from "react-router-dom";
+
+const FEATURED_MODES = [
+  {
+    title: "Daily Challenge",
+    icon: <Timer className="w-6 h-6 text-game-accent" />,
+    description: "New puzzles every day to keep your mind sharp",
+    link: "/daily-challenge"
+  },
+  {
+    title: "Multiplayer Arena",
+    icon: <Users className="w-6 h-6 text-game-accent" />,
+    description: "Challenge friends in real-time brain battles",
+    link: "/multiplayer"
+  },
+  {
+    title: "Achievement Hunt",
+    icon: <Trophy className="w-6 h-6 text-game-accent" />,
+    description: "Collect badges and climb the leaderboards",
+    link: "/achievements"
+  }
+];
 
 const GAME_CATEGORIES = {
   "Featured Games": [
@@ -16,10 +39,11 @@ const GAME_CATEGORIES = {
     "Jigsaw Puzzle",
     "Mind Maze"
   ],
-  "Brain Training Games": [
+  "Brain Training": [
     "Cerebro Challenge",
     "Brainy Quest",
-    "Puzzle Fusion"
+    "Puzzle Fusion",
+    "Logic Loop"
   ],
 };
 
@@ -29,7 +53,7 @@ const Index = () => {
       <div className="min-h-screen flex w-full bg-gradient-game overflow-hidden">
         <AppSidebar />
         <main className="flex-1 relative">
-          {/* Background pattern */}
+          {/* Animated background pattern */}
           <div 
             className="absolute inset-0 opacity-20"
             style={{
@@ -44,37 +68,65 @@ const Index = () => {
             <div className="mx-auto max-w-7xl p-8">
               {/* Hero Section */}
               <div className="text-center mb-16 space-y-8">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-game-surface backdrop-blur-sm border border-game-card-border mb-4">
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-game-surface backdrop-blur-sm border border-game-card-border mb-4"
+                >
                   <Sparkles className="w-4 h-4 text-game-accent" />
-                  <span className="text-sm text-white/80">New Games Added Weekly</span>
-                </div>
+                  <span className="text-sm text-white/80">Unleash Your Inner Genius!</span>
+                </motion.div>
                 
-                <h1 className="text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-game-accent via-game-secondary to-game-accent animate-float">
-                  Brain Games
-                </h1>
+                <motion.h1 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-game-accent via-game-secondary to-game-accent animate-float"
+                >
+                  Mind Marvels
+                </motion.h1>
                 
-                <div className="flex justify-center gap-6 text-white/80">
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="flex justify-center gap-6 text-white/80"
+                >
                   <div className="flex items-center gap-2">
                     <Brain className="w-5 h-5 text-game-accent" />
-                    <span>Enhance Cognitive Skills</span>
+                    <span>Train Your Brain</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Trophy className="w-5 h-5 text-game-accent" />
-                    <span>Compete Globally</span>
+                    <span>Earn Rewards</span>
                   </div>
-                </div>
+                  <div className="flex items-center gap-2">
+                    <Star className="w-5 h-5 text-game-accent" />
+                    <span>Daily Challenges</span>
+                  </div>
+                </motion.div>
                 
-                <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
-                  Challenge your mind with our collection of puzzle games designed to enhance your cognitive abilities
-                </p>
+                <motion.p 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed"
+                >
+                  Challenge your mind with our collection of brain-training games designed to enhance your cognitive abilities while having fun!
+                </motion.p>
                 
-                <div className="flex justify-center gap-4">
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="flex justify-center gap-4"
+                >
                   <Link 
                     to="/cerebro-challenge"
                     className="group px-8 py-3 bg-game-accent text-white rounded-full font-semibold hover:bg-game-accent/90 transition-colors duration-300 shadow-lg flex items-center gap-2"
                   >
                     <Brain className="w-4 h-4" />
-                    Play Now
+                    Start Training
                   </Link>
                   <Link
                     to="/about" 
@@ -82,30 +134,64 @@ const Index = () => {
                   >
                     Learn More
                   </Link>
-                </div>
+                </motion.div>
               </div>
 
-              {/* Featured Stats */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-                {[
-                  { label: "Active Players", value: "10K+" },
-                  { label: "Games Available", value: "15+" },
-                  { label: "Daily Challenges", value: "5" }
-                ].map((stat, index) => (
-                  <div 
-                    key={index}
-                    className="bg-gradient-card backdrop-blur-sm border border-game-card-border rounded-2xl p-6 text-center"
+              {/* Featured Game Modes */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16"
+              >
+                {FEATURED_MODES.map((mode, index) => (
+                  <Link
+                    key={mode.title}
+                    to={mode.link}
+                    className="group relative overflow-hidden rounded-2xl bg-gradient-card backdrop-blur-sm border border-game-card-border p-6 hover:border-game-accent/50 transition-all duration-300"
                   >
-                    <div className="text-3xl font-bold text-game-accent mb-2">{stat.value}</div>
-                    <div className="text-white/80">{stat.label}</div>
-                  </div>
+                    <div className="flex items-start gap-4">
+                      <div className="p-3 rounded-xl bg-game-surface">
+                        {mode.icon}
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-white mb-2">{mode.title}</h3>
+                        <p className="text-white/70">{mode.description}</p>
+                      </div>
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-game-accent/0 to-game-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </Link>
                 ))}
-              </div>
+              </motion.div>
 
-              {/* Games Grid */}
-              {Object.entries(GAME_CATEGORIES).map(([category, games]) => (
-                <CategorySection key={category} title={category} games={games} />
+              {/* Game Categories */}
+              {Object.entries(GAME_CATEGORIES).map(([category, games], index) => (
+                <motion.div
+                  key={category}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 + index * 0.1 }}
+                >
+                  <CategorySection title={category} games={games} />
+                </motion.div>
               ))}
+
+              {/* Daily Rewards */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+                className="mt-16 p-8 rounded-2xl bg-gradient-card backdrop-blur-sm border border-game-card-border"
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <Gift className="w-8 h-8 text-game-accent" />
+                  <h2 className="text-2xl font-bold text-white">Daily Rewards</h2>
+                </div>
+                <p className="text-white/80 mb-6">Complete daily challenges to earn special rewards and maintain your streak!</p>
+                <Button className="bg-game-accent text-white hover:bg-game-accent/90">
+                  Claim Today's Reward
+                </Button>
+              </motion.div>
             </div>
             
             <AdSpace position="bottom" />
