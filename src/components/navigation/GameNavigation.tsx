@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import { 
   Brain, 
   Grid3X3, 
-  Tetris, 
+  Gamepad, 
   CrosshairIcon, 
   TowerControl,
   Hash,
   Puzzle,
-  Maze,
+  Map,
   Gamepad2,
   Sparkles,
   Zap,
@@ -24,13 +24,13 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { path: "/tetris", label: "Tetris", icon: <Tetris className="w-5 h-5" /> },
+  { path: "/tetris", label: "Tetris", icon: <Gamepad className="w-5 h-5" /> },
   { path: "/sudoku", label: "Sudoku", icon: <Grid3X3 className="w-5 h-5" /> },
   { path: "/crossword", label: "Crossword", icon: <CrosshairIcon className="w-5 h-5" /> },
   { path: "/tower-of-hanoi", label: "Tower of Hanoi", icon: <TowerControl className="w-5 h-5" /> },
   { path: "/tic-tac-toe", label: "Tic Tac Toe", icon: <Hash className="w-5 h-5" /> },
   { path: "/jigsaw-puzzle", label: "Jigsaw Puzzle", icon: <Puzzle className="w-5 h-5" /> },
-  { path: "/mind-maze", label: "Mind Maze", icon: <Maze className="w-5 h-5" /> },
+  { path: "/mind-maze", label: "Mind Maze", icon: <Map className="w-5 h-5" /> },
   { path: "/puzzle-fusion", label: "Puzzle Fusion", icon: <Gamepad2 className="w-5 h-5" /> },
   { path: "/brainy-quest", label: "Brainy Quest", icon: <Brain className="w-5 h-5" /> },
   { path: "/cerebro-challenge", label: "Cerebro Challenge", icon: <Sparkles className="w-5 h-5" /> },
