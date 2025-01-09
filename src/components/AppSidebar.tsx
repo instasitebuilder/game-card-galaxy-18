@@ -1,4 +1,4 @@
-import { Home, CalendarDays, Info, FileText } from "lucide-react"
+import { Home, CalendarDays, Info, FileText } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -9,8 +9,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarHeader,
-} from "@/components/ui/sidebar"
-import { Link } from "react-router-dom"
+} from "@/components/ui/sidebar";
+import { Link } from "react-router-dom";
 
 const menuItems = [
   {
@@ -33,36 +33,38 @@ const menuItems = [
     url: "/future-games",
     icon: CalendarDays,
   },
-]
+];
 
 export function AppSidebar() {
   return (
-    <Sidebar>
-      <SidebarHeader className="p-4 border-b border-white/10">
+    <Sidebar className="bg-gradient-to-b from-game-surface to-game-secondary text-white min-h-screen">
+      <SidebarHeader className="p-6 border-b border-white/10 bg-gradient-to-r from-game-accent to-game-secondary">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-game-accent to-game-secondary flex items-center justify-center text-white font-bold text-xl">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-game-accent to-game-secondary flex items-center justify-center text-white font-extrabold text-2xl shadow-lg">
             B
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold text-white">BrainGames</span>
-            <span className="text-xs text-white/60">Challenge Your Mind</span>
+            <span className="font-bold text-lg">BrainGames</span>
+            <span className="text-sm text-white/80">Challenge Your Mind</span>
           </div>
         </div>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="p-4">
         <SidebarGroup>
-          <SidebarGroupLabel className="text-white/70">Navigation</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-white/70 mb-2 text-sm tracking-wide">
+            Navigation
+          </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="space-y-2">
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
-                    className="text-white hover:text-white hover:bg-white/10"
+                    className="flex items-center gap-3 px-4 py-2 rounded-lg transition-colors duration-300 hover:bg-white/10 text-white/80 hover:text-white"
                   >
-                    <Link to={item.url}>
-                      <item.icon className="w-4 h-4" />
-                      <span>{item.title}</span>
+                    <Link to={item.url} className="flex items-center gap-3 w-full">
+                      <item.icon className="w-5 h-5 text-game-accent" />
+                      <span className="font-medium text-sm">{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -72,5 +74,5 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }
