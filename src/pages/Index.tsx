@@ -12,37 +12,40 @@ const FEATURED_MODES = [
     title: "Daily Challenge",
     icon: <Timer className="w-6 h-6 text-game-accent" />,
     description: "New puzzles every day to keep your mind sharp",
-    link: "/daily-challenge"
+    link: "/daily-challenge",
+    image: "https://example.com/daily-challenge.jpg"
   },
   {
     title: "Multiplayer Arena",
     icon: <Users className="w-6 h-6 text-game-accent" />,
     description: "Challenge friends in real-time brain battles",
-    link: "/multiplayer"
+    link: "/multiplayer",
+    image: "https://example.com/multiplayer-arena.jpg"
   },
   {
     title: "Achievement Hunt",
     icon: <Trophy className="w-6 h-6 text-game-accent" />,
     description: "Collect badges and climb the leaderboards",
-    link: "/achievements"
+    link: "/achievements",
+    image: "https://example.com/achievement-hunt.jpg"
   }
 ];
 
 const GAME_CATEGORIES = {
   "Featured Games": [
-    "Tetris",
-    "Sudoku",
-    "Crossword Puzzles",
-    "Tic Tac Toe",
-    "Tower of Hanoi",
-    "Jigsaw Puzzle",
-    "Mind Maze"
+    { name: "Tetris", image: "https://example.com/tetris.jpg" },
+    { name: "Sudoku", image: "https://example.com/sudoku.jpg" },
+    { name: "Crossword Puzzles", image: "https://example.com/crossword.jpg" },
+    { name: "Tic Tac Toe", image: "https://example.com/tic-tac-toe.jpg" },
+    { name: "Tower of Hanoi", image: "https://example.com/tower-of-hanoi.jpg" },
+    { name: "Jigsaw Puzzle", image: "https://example.com/jigsaw.jpg" },
+    { name: "Mind Maze", image: "https://example.com/mind-maze.jpg" }
   ],
   "Brain Training": [
-    "Cerebro Challenge",
-    "Brainy Quest",
-    "Puzzle Fusion",
-    "Logic Loop"
+    { name: "Cerebro Challenge", image: "https://example.com/cerebro-challenge.jpg" },
+    { name: "Brainy Quest", image: "https://example.com/brainy-quest.jpg" },
+    { name: "Puzzle Fusion", image: "https://example.com/puzzle-fusion.jpg" },
+    { name: "Logic Loop", image: "https://example.com/logic-loop.jpg" }
   ]
 };
 
@@ -150,6 +153,7 @@ const Index = () => {
                     <p className="text-white/70">{mode.description}</p>
                   </div>
                 </div>
+                <img src={mode.image} alt={mode.title} className="w-full h-40 object-cover mt-4 rounded-lg" />
                 <div className="absolute inset-0 bg-gradient-to-r from-game-accent/0 to-game-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </Link>
             ))}
@@ -163,7 +167,13 @@ const Index = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 + index * 0.1 }}
             >
-              <CategorySection title={category} games={games} />
+              <CategorySection 
+                title={category} 
+                games={games.map(game => ({
+                  name: game.name,
+                  image: game.image
+                }))} 
+              />
             </motion.div>
           ))}
 
