@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
-import { 
-  Brain, 
-  Shuffle, 
-  RotateCcw, 
-  Forward, 
-  HelpCircle 
-} from 'lucide-react';
+import { Brain, Shuffle, RotateCcw, Forward, HelpCircle } from 'lucide-react';
 import GameLayout from '@/components/layouts/GameLayout';
+import AdSpace from '@/components/ads/AdSpace';
 
 interface Tile {
   letter: string;
@@ -17,7 +12,7 @@ interface Tile {
 }
 
 interface BoardCell {
-  multiplier: 'normal' | 'DL' | 'TL' | 'DW' | 'TW';
+  multiplier: string;
   tile: Tile | null;
 }
 
@@ -31,26 +26,25 @@ const ScrabbleGame = () => {
   const [score, setScore] = useState({ player: 0, ai: 0 });
   const [difficulty, setDifficulty] = useState<'beginner' | 'intermediate' | 'expert'>('beginner');
   const [isPlayerTurn, setIsPlayerTurn] = useState(true);
+  const [showInstructions, setShowInstructions] = useState(true);
 
-  // Initialize game board with premium squares
   function initializeBoard(): BoardCell[][] {
     const board = Array(BOARD_SIZE).fill(null).map(() =>
       Array(BOARD_SIZE).fill(null).map(() => ({
-        multiplier: 'normal' as const,
+        multiplier: 'normal',
         tile: null
       }))
     );
 
-    // Add premium squares (this is a simplified version)
     const premiumSquares = [
-      { row: 0, col: 0, type: 'TW' as const },
-      { row: 0, col: 7, type: 'TW' as const },
-      { row: 0, col: 14, type: 'TW' as const },
-      { row: 7, col: 0, type: 'TW' as const },
-      { row: 7, col: 14, type: 'TW' as const },
-      { row: 14, col: 0, type: 'TW' as const },
-      { row: 14, col: 7, type: 'TW' as const },
-      { row: 14, col: 14, type: 'TW' as const },
+      { row: 0, col: 0, type: 'TW' },
+      { row: 0, col: 7, type: 'TW' },
+      { row: 0, col: 14, type: 'TW' },
+      { row: 7, col: 0, type: 'TW' },
+      { row: 7, col: 14, type: 'TW' },
+      { row: 14, col: 0, type: 'TW' },
+      { row: 14, col: 7, type: 'TW' },
+      { row: 14, col: 14, type: 'TW' }
     ];
 
     premiumSquares.forEach(({ row, col, type }) => {
@@ -60,7 +54,6 @@ const ScrabbleGame = () => {
     return board;
   }
 
-  // Generate a random tile
   const generateTile = (): Tile => {
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const letter = letters[Math.floor(Math.random() * letters.length)];
@@ -81,7 +74,6 @@ const ScrabbleGame = () => {
     };
   };
 
-  // Handle tile placement and scoring logic here
   const placeTile = (row: number, col: number, tile: Tile) => {
     // Implement tile placement logic
   };
@@ -95,23 +87,75 @@ const ScrabbleGame = () => {
   };
 
   return (
-    <GameLayout>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-        <h1 className="text-3xl font-bold mb-8">Scrabble Game</h1>
-        <div className="grid grid-cols-15 gap-1">
-          {board.map((row, rowIndex) => (
-            row.map((cell, colIndex) => (
-              <div key={`${rowIndex}-${colIndex}`} className={`w-12 h-12 border ${cell.multiplier !== 'normal' ? 'bg-yellow-200' : 'bg-white'}`}>
-                {cell.tile ? cell.tile.letter : ''}
+    <div className="min-h-screen bg-gradient-to-br from-game-primary via-[#6B46C1] to-game-secondary">
+      <GameLayout>
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <AdSpace position="top" />
+          
+          <div className="mb-8 space-y-6">
+            <h1 className="text-4xl font-bold text-white text-center">Scrabble Game</h1>
+            
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+              <div className="flex items-center gap-2 mb-4">
+                <HelpCircle className="w-5 h-5 text-game-accent" />
+                <h2 className="text-xl font-semibold text-white">How to Play</h2>
               </div>
-            ))
-          ))}
+              
+              <div className="space-y-4 text-white/80">
+                <div>
+                  <h3 className="font-semibold mb-2">Getting Started:</h3>
+                  <p>1. Click "Draw Tile" to get your initial set of letters</p>
+                  <p>2. Arrange letters on the board to form words</p>
+                  <p>3. Submit your word to score points</p>
+                </div>
+                
+                <div>
+                  <h3 className="font-semibold mb-2">Objective:</h3>
+                  <p>Create words and score the highest points possible using letter values and board multipliers</p>
+                </div>
+                
+                <div>
+                  <h3 className="font-semibold mb-2">How to Win:</h3>
+                  <p>Reach 100 points before your opponent or achieve the highest score when all tiles are used</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+              <div className="grid grid-cols-15 gap-1">
+                {board.map((row, rowIndex) => (
+                  row.map((cell, colIndex) => (
+                    <div 
+                      key={`${rowIndex}-${colIndex}`} 
+                      className={`w-12 h-12 border ${
+                        cell.multiplier !== 'normal' 
+                          ? 'bg-game-accent/20' 
+                          : 'bg-white/5'
+                      } rounded-lg flex items-center justify-center text-white font-bold`}
+                    >
+                      {cell.tile ? cell.tile.letter : ''}
+                    </div>
+                  ))
+                ))}
+              </div>
+              
+              <div className="mt-6 flex justify-center gap-4">
+                <Button 
+                  onClick={() => generateTile()}
+                  className="bg-game-accent hover:bg-game-accent/90"
+                >
+                  Draw Tile
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <AdSpace position="bottom" />
         </div>
-        <div className="mt-4">
-          <Button onClick={() => generateTile()}>Draw Tile</Button>
-        </div>
-      </div>
-    </GameLayout>
+      </GameLayout>
+    </div>
   );
 };
 

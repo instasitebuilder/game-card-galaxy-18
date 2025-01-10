@@ -5,6 +5,8 @@ import { GameMode } from "@/components/tictactoe/GameMode";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import GameLayout from "@/components/layouts/GameLayout";
+import AdSpace from "@/components/ads/AdSpace";
+import { HelpCircle } from "lucide-react";
 
 type Player = "X" | "O";
 type GameState = "selecting" | "playing" | "finished";
@@ -72,45 +74,79 @@ const TicTacToe = () => {
   };
 
   return (
-    <GameLayout>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-2xl mx-auto"
-      >
-        <h1 className="text-4xl font-bold text-center mb-8 text-white">
-          Tic-Tac-Toe
-        </h1>
+    <div className="min-h-screen bg-gradient-to-br from-game-primary via-[#6B46C1] to-game-secondary">
+      <GameLayout>
+        <div className="max-w-4xl mx-auto px-4 py-8">
+          <AdSpace position="top" />
 
-        {gameState === "selecting" && (
-          <GameMode onSelectMode={startGame} />
-        )}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-8"
+          >
+            <h1 className="text-4xl font-bold text-center text-white">
+              Tic-Tac-Toe
+            </h1>
 
-        {gameState !== "selecting" && (
-          <div className="space-y-6">
-            <div className="text-center text-xl text-game-accent mb-4">
-              {!winner && `Player ${currentPlayer}'s Turn`}
-              {winner && (winner === "tie" ? "It's a Tie!" : `Player ${winner} Wins!`)}
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+              <div className="flex items-center gap-2 mb-4">
+                <HelpCircle className="w-5 h-5 text-game-accent" />
+                <h2 className="text-xl font-semibold text-white">How to Play</h2>
+              </div>
+              
+              <div className="space-y-4 text-white/80">
+                <div>
+                  <h3 className="font-semibold mb-2">Getting Started:</h3>
+                  <p>1. Choose game mode (Single Player or Multiplayer)</p>
+                  <p>2. Player X goes first</p>
+                  <p>3. Click on any empty cell to place your mark</p>
+                </div>
+                
+                <div>
+                  <h3 className="font-semibold mb-2">Objective:</h3>
+                  <p>Get three of your marks (X or O) in a row - horizontally, vertically, or diagonally</p>
+                </div>
+                
+                <div>
+                  <h3 className="font-semibold mb-2">How to Win:</h3>
+                  <p>Be the first player to get 3 marks in a row</p>
+                </div>
+              </div>
             </div>
 
-            <GameBoard
-              board={board}
-              onCellClick={handleCellClick}
-              winner={winner}
-            />
+            {gameState === "selecting" && (
+              <GameMode onSelectMode={startGame} />
+            )}
 
-            <div className="flex justify-center mt-6">
-              <Button
-                onClick={resetGame}
-                className="bg-game-secondary hover:bg-game-primary text-white"
-              >
-                Reset Game
-              </Button>
-            </div>
-          </div>
-        )}
-      </motion.div>
-    </GameLayout>
+            {gameState !== "selecting" && (
+              <div className="space-y-6">
+                <div className="text-center text-xl text-game-accent mb-4">
+                  {!winner && `Player ${currentPlayer}'s Turn`}
+                  {winner && (winner === "tie" ? "It's a Tie!" : `Player ${winner} Wins!`)}
+                </div>
+
+                <GameBoard
+                  board={board}
+                  onCellClick={handleCellClick}
+                  winner={winner}
+                />
+
+                <div className="flex justify-center mt-6">
+                  <Button
+                    onClick={resetGame}
+                    className="bg-game-accent hover:bg-game-accent/90 text-white"
+                  >
+                    Reset Game
+                  </Button>
+                </div>
+              </div>
+            )}
+          </motion.div>
+
+          <AdSpace position="bottom" />
+        </div>
+      </GameLayout>
+    </div>
   );
 };
 
