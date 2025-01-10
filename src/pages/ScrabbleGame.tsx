@@ -5,7 +5,7 @@ import {
   Brain, 
   Shuffle, 
   RotateCcw, 
-  Skip,
+  Forward, 
   HelpCircle 
 } from 'lucide-react';
 import GameLayout from '@/components/layouts/GameLayout';
@@ -36,25 +36,25 @@ const ScrabbleGame = () => {
   function initializeBoard(): BoardCell[][] {
     const board = Array(BOARD_SIZE).fill(null).map(() =>
       Array(BOARD_SIZE).fill(null).map(() => ({
-        multiplier: 'normal',
+        multiplier: 'normal' as const,
         tile: null
       }))
     );
 
     // Add premium squares (this is a simplified version)
     const premiumSquares = [
-      { row: 0, col: 0, type: 'TW' },
-      { row: 0, col: 7, type: 'TW' },
-      { row: 0, col: 14, type: 'TW' },
-      { row: 7, col: 0, type: 'TW' },
-      { row: 7, col: 14, type: 'TW' },
-      { row: 14, col: 0, type: 'TW' },
-      { row: 14, col: 7, type: 'TW' },
-      { row: 14, col: 14, type: 'TW' },
+      { row: 0, col: 0, type: 'TW' as const },
+      { row: 0, col: 7, type: 'TW' as const },
+      { row: 0, col: 14, type: 'TW' as const },
+      { row: 7, col: 0, type: 'TW' as const },
+      { row: 7, col: 14, type: 'TW' as const },
+      { row: 14, col: 0, type: 'TW' as const },
+      { row: 14, col: 7, type: 'TW' as const },
+      { row: 14, col: 14, type: 'TW' as const },
     ];
 
     premiumSquares.forEach(({ row, col, type }) => {
-      board[row][col].multiplier = type as BoardCell['multiplier'];
+      board[row][col].multiplier = type;
     });
 
     return board;
@@ -238,7 +238,7 @@ const ScrabbleGame = () => {
                 }}
                 className="bg-amber-700 hover:bg-amber-600 text-white"
               >
-                <Skip className="h-4 w-4" />
+                <Forward className="h-4 w-4" />
               </Button>
             </div>
           </div>
