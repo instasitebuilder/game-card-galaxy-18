@@ -1,4 +1,4 @@
-export type Direction = "down" | "across";
+export type Direction = "across" | "down";
 
 export interface Clue {
   number: number;
@@ -9,12 +9,12 @@ export interface Clue {
   startCol: number;
 }
 
+export type Difficulty = "level1" | "level2" | "level3" | "level4" | "level5" | "level6" | "level7" | "level8" | "level9" | "level10";
+
 export interface Puzzle {
   size: number;
   clues: Clue[];
 }
-
-export type Difficulty = "easy" | "medium" | "hard";
 
 export interface PuzzleCollection {
   [key: string]: Puzzle;

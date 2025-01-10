@@ -1,50 +1,34 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { type Difficulty } from '@/types/crossword';
 
 interface DifficultySelectorProps {
-  difficulty: 'easy' | 'medium' | 'hard';
-  onSelect: (difficulty: 'easy' | 'medium' | 'hard') => void;
+  difficulty: Difficulty;
+  onSelect: (difficulty: Difficulty) => void;
 }
 
 export const DifficultySelector: React.FC<DifficultySelectorProps> = ({
   difficulty,
   onSelect,
 }) => {
+  const levels = Array.from({ length: 10 }, (_, i) => `level${i + 1}` as Difficulty);
+
   return (
     <div className="flex flex-wrap gap-4">
-      <Button
-        onClick={() => onSelect('easy')}
-        variant={difficulty === 'easy' ? 'default' : 'outline'}
-        className={`${
-          difficulty === 'easy'
-            ? 'bg-game-accent hover:bg-game-accent/80'
-            : 'bg-white/5 hover:bg-white/10'
-        }`}
-      >
-        Easy
-      </Button>
-      <Button
-        onClick={() => onSelect('medium')}
-        variant={difficulty === 'medium' ? 'default' : 'outline'}
-        className={`${
-          difficulty === 'medium'
-            ? 'bg-game-accent hover:bg-game-accent/80'
-            : 'bg-white/5 hover:bg-white/10'
-        }`}
-      >
-        Medium
-      </Button>
-      <Button
-        onClick={() => onSelect('hard')}
-        variant={difficulty === 'hard' ? 'default' : 'outline'}
-        className={`${
-          difficulty === 'hard'
-            ? 'bg-game-accent hover:bg-game-accent/80'
-            : 'bg-white/5 hover:bg-white/10'
-        }`}
-      >
-        Hard
-      </Button>
+      {levels.map((level) => (
+        <Button
+          key={level}
+          onClick={() => onSelect(level)}
+          variant={difficulty === level ? 'default' : 'outline'}
+          className={`${
+            difficulty === level
+              ? 'bg-game-accent hover:bg-game-accent/80'
+              : 'bg-white/5 hover:bg-white/10'
+          }`}
+        >
+          Level {level.replace('level', '')}
+        </Button>
+      ))}
     </div>
   );
 };

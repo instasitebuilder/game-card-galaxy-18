@@ -11,7 +11,7 @@ import GameLayout from '@/components/layouts/GameLayout';
 import { motion } from 'framer-motion';
 
 const puzzles = {
-  easy: {
+  level1: {
     size: 5,
     clues: [
       {
@@ -32,7 +32,28 @@ const puzzles = {
       },
     ],
   },
-  medium: {
+  level2: {
+    size: 6,
+    clues: [
+      {
+        number: 1,
+        text: "Feline pet",
+        answer: "CAT",
+        direction: "across" as const,
+        startRow: 0,
+        startCol: 0,
+      },
+      {
+        number: 2,
+        text: "Color of the sky",
+        answer: "BLUE",
+        direction: "down" as const,
+        startRow: 0,
+        startCol: 1,
+      },
+    ],
+  },
+  level3: {
     size: 7,
     clues: [
       {
@@ -53,7 +74,49 @@ const puzzles = {
       },
     ],
   },
-  hard: {
+  level4: {
+    size: 8,
+    clues: [
+      {
+        number: 1,
+        text: "Musical instrument with black and white keys",
+        answer: "PIANO",
+        direction: "across" as const,
+        startRow: 0,
+        startCol: 0,
+      },
+      {
+        number: 2,
+        text: "Frozen water",
+        answer: "ICE",
+        direction: "down" as const,
+        startRow: 0,
+        startCol: 3,
+      },
+    ],
+  },
+  level5: {
+    size: 9,
+    clues: [
+      {
+        number: 1,
+        text: "Eight-legged arachnid",
+        answer: "SPIDER",
+        direction: "across" as const,
+        startRow: 0,
+        startCol: 0,
+      },
+      {
+        number: 2,
+        text: "Opposite of young",
+        answer: "OLD",
+        direction: "down" as const,
+        startRow: 0,
+        startCol: 4,
+      },
+    ],
+  },
+  level6: {
     size: 10,
     clues: [
       {
@@ -71,6 +134,90 @@ const puzzles = {
         direction: "down" as const,
         startRow: 0,
         startCol: 2,
+      },
+    ],
+  },
+  level7: {
+    size: 11,
+    clues: [
+      {
+        number: 1,
+        text: "Process of converting food to energy",
+        answer: "METABOLISM",
+        direction: "across" as const,
+        startRow: 0,
+        startCol: 0,
+      },
+      {
+        number: 2,
+        text: "Study of weather",
+        answer: "METEOROLOGY",
+        direction: "down" as const,
+        startRow: 0,
+        startCol: 5,
+      },
+    ],
+  },
+  level8: {
+    size: 12,
+    clues: [
+      {
+        number: 1,
+        text: "Study of microscopic organisms",
+        answer: "MICROBIOLOGY",
+        direction: "across" as const,
+        startRow: 0,
+        startCol: 0,
+      },
+      {
+        number: 2,
+        text: "Fear of heights",
+        answer: "ACROPHOBIA",
+        direction: "down" as const,
+        startRow: 0,
+        startCol: 6,
+      },
+    ],
+  },
+  level9: {
+    size: 13,
+    clues: [
+      {
+        number: 1,
+        text: "Study of the origin of words",
+        answer: "ETYMOLOGY",
+        direction: "across" as const,
+        startRow: 0,
+        startCol: 0,
+      },
+      {
+        number: 2,
+        text: "Branch of mathematics dealing with shapes",
+        answer: "GEOMETRY",
+        direction: "down" as const,
+        startRow: 0,
+        startCol: 4,
+      },
+    ],
+  },
+  level10: {
+    size: 15,
+    clues: [
+      {
+        number: 1,
+        text: "Study of the structure of matter",
+        answer: "CRYSTALLOGRAPHY",
+        direction: "across" as const,
+        startRow: 0,
+        startCol: 0,
+      },
+      {
+        number: 2,
+        text: "Study of ancient civilizations",
+        answer: "ARCHAEOLOGY",
+        direction: "down" as const,
+        startRow: 0,
+        startCol: 7,
       },
     ],
   },
