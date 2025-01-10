@@ -301,7 +301,7 @@ const puzzles = {
       },
     ],
   },
-} as const;
+};
 
 const CrosswordGame = () => {
   const [difficulty, setDifficulty] = useState<Difficulty>("level1");
@@ -343,7 +343,7 @@ const CrosswordGame = () => {
         (c.direction === 'down' && c.startCol === col && row >= c.startRow && row < c.startRow + c.answer.length)
     );
     if (clue) {
-      setSelectedClue(clue);
+      setSelectedClue(clue as Clue);
     }
   };
 
