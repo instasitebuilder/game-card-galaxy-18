@@ -51,7 +51,7 @@ const ScrabbleGame = () => {
       { row: 14, col: 0, type: 'TW' as const },
       { row: 14, col: 7, type: 'TW' as const },
       { row: 14, col: 14, type: 'TW' as const },
-    ];
+    ] as const;
 
     premiumSquares.forEach(({ row, col, type }) => {
       board[row][col].multiplier = type;

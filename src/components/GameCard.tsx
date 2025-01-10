@@ -22,8 +22,8 @@ const GameCard = ({ title }: GameCardProps) => {
   const imageUrl = `https://source.unsplash.com/${gameImages[title] || defaultImage}/400x300`;
 
   const getGamePath = (gameTitle: string) => {
-    const title = gameTitle.toLowerCase().replace(/\s+/g, '-');
-    return `/${title}`;
+    if (!gameTitle) return '/';
+    return `/${gameTitle.toLowerCase().replace(/\s+/g, '-')}`;
   };
 
   return (
