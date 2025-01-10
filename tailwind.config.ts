@@ -1,12 +1,12 @@
-import type { Config } from "tailwindcss";
+import { type Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
   ],
   prefix: "",
   theme: {
@@ -18,6 +18,9 @@ export default {
       },
     },
     extend: {
+      gridTemplateColumns: {
+        '15': 'repeat(15, minmax(0, 1fr))',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -53,27 +56,16 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         game: {
-          primary: "#1A1F2C",
-          secondary: "#9b87f5",
-          accent: "#F97316",
-          text: "#FFFFFF",
-          surface: "rgba(255, 255, 255, 0.05)",
-          card: {
-            bg: "rgba(255, 255, 255, 0.1)",
-            hover: "rgba(255, 255, 255, 0.15)",
-            border: "rgba(255, 255, 255, 0.1)",
-          },
-        },
+          primary: "#1a1a2e",
+          secondary: "#16213e",
+          accent: "#e94560",
+          background: "#0f0f0f"
+        }
       },
-      backgroundImage: {
-        'gradient-game': 'linear-gradient(to right bottom, #1A1F2C, #2A1B54)',
-        'gradient-card': 'linear-gradient(to bottom right, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        "card-hover": "card-hover 1s ease-in-out infinite",
-        'float': 'float 6s ease-in-out infinite',
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
         "accordion-down": {
@@ -84,16 +76,12 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "card-hover": {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-5px)" },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+} satisfies Config

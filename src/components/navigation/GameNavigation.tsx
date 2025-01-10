@@ -14,7 +14,8 @@ import {
   Sparkles,
   Zap,
   CircuitBoard,
-  CircleDot
+  CircleDot,
+  LetterCase
 } from "lucide-react";
 
 interface NavItem {
@@ -36,6 +37,7 @@ const navItems: NavItem[] = [
   { path: "/cerebro-challenge", label: "Cerebro Challenge", icon: <Sparkles className="w-5 h-5" /> },
   { path: "/logic-loop", label: "Logic Loop", icon: <CircuitBoard className="w-5 h-5" /> },
   { path: "/go-game", label: "Go Game", icon: <CircleDot className="w-5 h-5" /> },
+  { path: "/scrabble", label: "Scrabble", icon: <LetterCase className="w-5 h-5" /> },
 ];
 
 const GameNavigation = () => {

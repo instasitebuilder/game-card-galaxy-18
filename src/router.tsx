@@ -12,6 +12,7 @@ import BrainyQuest from "./pages/BrainyQuest";
 import CerebroChallenge from "./pages/CerebroChallenge";
 import LogicLoop from "./pages/LogicLoop";
 import GoGame from "./pages/GoGame";
+import ScrabbleGame from "./pages/ScrabbleGame";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
   {
     path: "/go-game",
     element: <GoGame />,
+  },
+  {
+    path: "/scrabble",
+    element: <ScrabbleGame />,
   },
 ]);
 
