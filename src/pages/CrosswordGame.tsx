@@ -18,7 +18,7 @@ const puzzles = {
         number: 1,
         text: "First word in many fairy tales",
         answer: "ONCE",
-        direction: "across" as const,
+        direction: "across",
         startRow: 0,
         startCol: 0,
       },
@@ -26,7 +26,7 @@ const puzzles = {
         number: 2,
         text: "Opposite of night",
         answer: "DAY",
-        direction: "down" as const,
+        direction: "down",
         startRow: 0,
         startCol: 2,
       },
@@ -34,7 +34,7 @@ const puzzles = {
         number: 3,
         text: "Small flying insect",
         answer: "BEE",
-        direction: "across" as const,
+        direction: "across",
         startRow: 2,
         startCol: 1,
       },
@@ -47,7 +47,7 @@ const puzzles = {
         number: 1,
         text: "Celestial body that orbits Earth",
         answer: "MOON",
-        direction: "across" as const,
+        direction: "across",
         startRow: 0,
         startCol: 1,
       },
@@ -55,7 +55,7 @@ const puzzles = {
         number: 2,
         text: "Frozen precipitation",
         answer: "SNOW",
-        direction: "down" as const,
+        direction: "down",
         startRow: 0,
         startCol: 2,
       },
@@ -63,7 +63,7 @@ const puzzles = {
         number: 3,
         text: "Large African cat",
         answer: "LION",
-        direction: "across" as const,
+        direction: "across",
         startRow: 3,
         startCol: 0,
       },
@@ -76,7 +76,7 @@ const puzzles = {
         number: 1,
         text: "Capital of France",
         answer: "PARIS",
-        direction: "across" as const,
+        direction: "across",
         startRow: 0,
         startCol: 1,
       },
@@ -84,7 +84,7 @@ const puzzles = {
         number: 2,
         text: "Closest planet to the Sun",
         answer: "MERCURY",
-        direction: "down" as const,
+        direction: "down",
         startRow: 0,
         startCol: 3,
       },
@@ -92,7 +92,7 @@ const puzzles = {
         number: 3,
         text: "Ancient Greek marketplace",
         answer: "AGORA",
-        direction: "across" as const,
+        direction: "across",
         startRow: 4,
         startCol: 2,
       },
@@ -105,7 +105,7 @@ const puzzles = {
         number: 1,
         text: "Study of ancient civilizations",
         answer: "HISTORY",
-        direction: "across" as const,
+        direction: "across",
         startRow: 0,
         startCol: 0,
       },
@@ -113,7 +113,7 @@ const puzzles = {
         number: 2,
         text: "Process of converting food to energy",
         answer: "DIGEST",
-        direction: "down" as const,
+        direction: "down",
         startRow: 0,
         startCol: 3,
       },
@@ -121,7 +121,7 @@ const puzzles = {
         number: 3,
         text: "Astronomical phenomenon",
         answer: "ECLIPSE",
-        direction: "across" as const,
+        direction: "across",
         startRow: 4,
         startCol: 1,
       },
@@ -134,7 +134,7 @@ const puzzles = {
         number: 1,
         text: "Study of Earth's physical features",
         answer: "GEOLOGY",
-        direction: "across" as const,
+        direction: "across",
         startRow: 0,
         startCol: 1,
       },
@@ -142,7 +142,7 @@ const puzzles = {
         number: 2,
         text: "Fear of enclosed spaces",
         answer: "CLAUSTROPHOBIA",
-        direction: "down" as const,
+        direction: "down",
         startRow: 0,
         startCol: 4,
       },
@@ -150,7 +150,7 @@ const puzzles = {
         number: 3,
         text: "Branch of mathematics dealing with shapes",
         answer: "GEOMETRY",
-        direction: "across" as const,
+        direction: "across",
         startRow: 5,
         startCol: 2,
       },
@@ -163,7 +163,7 @@ const puzzles = {
         number: 1,
         text: "Study of microscopic life",
         answer: "MICROBIOLOGY",
-        direction: "across" as const,
+        direction: "across",
         startRow: 0,
         startCol: 0,
       },
@@ -171,7 +171,7 @@ const puzzles = {
         number: 2,
         text: "Process of cell division",
         answer: "MITOSIS",
-        direction: "down" as const,
+        direction: "down",
         startRow: 0,
         startCol: 5,
       },
@@ -179,7 +179,7 @@ const puzzles = {
         number: 3,
         text: "Study of heredity",
         answer: "GENETICS",
-        direction: "across" as const,
+        direction: "across",
         startRow: 6,
         startCol: 2,
       },
@@ -192,7 +192,7 @@ const puzzles = {
         number: 1,
         text: "Study of the atmosphere",
         answer: "METEOROLOGY",
-        direction: "across" as const,
+        direction: "across",
         startRow: 0,
         startCol: 0,
       },
@@ -200,7 +200,7 @@ const puzzles = {
         number: 2,
         text: "Branch of physics dealing with motion",
         answer: "KINEMATICS",
-        direction: "down" as const,
+        direction: "down",
         startRow: 0,
         startCol: 6,
       },
@@ -208,7 +208,7 @@ const puzzles = {
         number: 3,
         text: "Study of chemical reactions",
         answer: "BIOCHEMISTRY",
-        direction: "across" as const,
+        direction: "across",
         startRow: 7,
         startCol: 2,
       },
@@ -221,7 +221,7 @@ const puzzles = {
         number: 1,
         text: "Study of the human mind and behavior",
         answer: "PSYCHOLOGY",
-        direction: "across" as const,
+        direction: "across",
         startRow: 0,
         startCol: 2,
       },
@@ -229,7 +229,7 @@ const puzzles = {
         number: 2,
         text: "Branch of medicine dealing with heart",
         answer: "CARDIOLOGY",
-        direction: "down" as const,
+        direction: "down",
         startRow: 0,
         startCol: 7,
       },
@@ -237,7 +237,7 @@ const puzzles = {
         number: 3,
         text: "Study of the nervous system",
         answer: "NEUROSCIENCE",
-        direction: "across" as const,
+        direction: "across",
         startRow: 8,
         startCol: 1,
       },
@@ -250,7 +250,7 @@ const puzzles = {
         number: 1,
         text: "Study of the origin and structure of the universe",
         answer: "COSMOLOGY",
-        direction: "across" as const,
+        direction: "across",
         startRow: 0,
         startCol: 3,
       },
@@ -258,7 +258,7 @@ const puzzles = {
         number: 2,
         text: "Study of prehistoric life through fossils",
         answer: "PALEONTOLOGY",
-        direction: "down" as const,
+        direction: "down",
         startRow: 0,
         startCol: 8,
       },
@@ -266,7 +266,7 @@ const puzzles = {
         number: 3,
         text: "Branch of biology dealing with cells",
         answer: "CYTOLOGY",
-        direction: "across" as const,
+        direction: "across",
         startRow: 9,
         startCol: 2,
       },
@@ -279,7 +279,7 @@ const puzzles = {
         number: 1,
         text: "Study of the properties and behavior of matter and energy",
         answer: "QUANTUMPHYSICS",
-        direction: "across" as const,
+        direction: "across",
         startRow: 0,
         startCol: 1,
       },
@@ -287,7 +287,7 @@ const puzzles = {
         number: 2,
         text: "Study of the chemical processes in living organisms",
         answer: "BIOCHEMISTRY",
-        direction: "down" as const,
+        direction: "down",
         startRow: 0,
         startCol: 7,
       },
@@ -295,16 +295,16 @@ const puzzles = {
         number: 3,
         text: "Study of the structure and properties of crystals",
         answer: "CRYSTALLOGRAPHY",
-        direction: "across" as const,
+        direction: "across",
         startRow: 10,
         startCol: 2,
       },
     ],
   },
-} as const;
+};
 
 const CrosswordGame = () => {
-  const [difficulty, setDifficulty] = useState<Difficulty>('level1');
+  const [difficulty, setDifficulty] = useState<Difficulty>("level1");
   const [selectedCell, setSelectedCell] = useState<{ row: number; col: number } | null>(null);
   const [selectedClue, setSelectedClue] = useState<Clue | null>(null);
   const [userAnswers, setUserAnswers] = useState<string[][]>([]);
@@ -442,79 +442,77 @@ const CrosswordGame = () => {
   return (
     <GameLayout>
       <div className="min-h-screen bg-gradient-to-br from-game-background via-game-primary to-game-secondary p-4 md:p-8">
-        <div className="max-w-7xl mx-auto space-y-8">
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-between flex-wrap gap-4"
-          >
-            <div className="flex items-center gap-3">
-              <Book className="w-8 h-8 text-game-accent" />
-              <h1 className="text-3xl md:text-4xl font-bold text-white">Crossword Puzzle</h1>
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center justify-between flex-wrap gap-4"
+        >
+          <div className="flex items-center gap-3">
+            <Book className="w-8 h-8 text-game-accent" />
+            <h1 className="text-3xl md:text-4xl font-bold text-white">Crossword Puzzle</h1>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Trophy className="w-6 h-6 text-game-accent" />
+              <span className="text-white/80 text-sm">Score: {score}</span>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <Trophy className="w-6 h-6 text-game-accent" />
-                <span className="text-white/80 text-sm">Score: {score}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Star className="w-6 h-6 text-game-accent" />
-                <span className="text-white/80 text-sm">Streak: {streak}</span>
-              </div>
-              <button
-                onClick={useHint}
-                className="flex items-center gap-2 px-3 py-1 bg-game-accent/20 rounded-full hover:bg-game-accent/30 transition-colors"
-              >
-                <HelpCircle className="w-4 h-4 text-game-accent" />
-                <span className="text-white/80 text-sm">{hintsRemaining} Hints</span>
-              </button>
+            <div className="flex items-center gap-2">
+              <Star className="w-6 h-6 text-game-accent" />
+              <span className="text-white/80 text-sm">Streak: {streak}</span>
             </div>
-          </motion.div>
+            <button
+              onClick={useHint}
+              className="flex items-center gap-2 px-3 py-1 bg-game-accent/20 rounded-full hover:bg-game-accent/30 transition-colors"
+            >
+              <HelpCircle className="w-4 h-4 text-game-accent" />
+              <span className="text-white/80 text-sm">{hintsRemaining} Hints</span>
+            </button>
+          </div>
+        </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-white/10 backdrop-blur-sm rounded-lg p-4"
-          >
-            <DifficultySelector
-              difficulty={difficulty}
-              onSelect={setDifficulty}
-            />
-            <div className="mt-4">
-              <div className="flex items-center gap-4 text-white/80 text-sm mb-2">
-                <span>Progress:</span>
-                <span>{Math.round(progress)}%</span>
-              </div>
-              <Progress value={progress} className="h-2" />
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white/10 backdrop-blur-sm rounded-lg p-4"
+        >
+          <DifficultySelector
+            difficulty={difficulty}
+            onSelect={setDifficulty}
+          />
+          <div className="mt-4">
+            <div className="flex items-center gap-4 text-white/80 text-sm mb-2">
+              <span>Progress:</span>
+              <span>{Math.round(progress)}%</span>
             </div>
-          </motion.div>
+            <Progress value={progress} className="h-2" />
+          </div>
+        </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 space-y-6">
-              <GameControls timer={timer} onCheck={checkPuzzle} />
-              {currentPuzzle && (
-                <CrosswordGrid
-                  size={currentPuzzle.size}
-                  clues={currentPuzzle.clues}
-                  selectedCell={selectedCell}
-                  userAnswers={userAnswers}
-                  onCellSelect={handleCellSelect}
-                  onInput={handleInput}
-                />
-              )}
-            </div>
-            <div>
-              {currentPuzzle && (
-                <CluesList
-                  clues={currentPuzzle.clues}
-                  selectedClue={selectedClue}
-                  onClueSelect={(clue) => {
-                    setSelectedCell({ row: clue.startRow, col: clue.startCol });
-                    setSelectedClue(clue);
-                  }}
-                />
-              )}
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-6">
+            <GameControls timer={timer} onCheck={checkPuzzle} />
+            {currentPuzzle && (
+              <CrosswordGrid
+                size={currentPuzzle.size}
+                clues={currentPuzzle.clues}
+                selectedCell={selectedCell}
+                userAnswers={userAnswers}
+                onCellSelect={handleCellSelect}
+                onInput={handleInput}
+              />
+            )}
+          </div>
+          <div>
+            {currentPuzzle && (
+              <CluesList
+                clues={currentPuzzle.clues}
+                selectedClue={selectedClue}
+                onClueSelect={(clue) => {
+                  setSelectedCell({ row: clue.startRow, col: clue.startCol });
+                  setSelectedClue(clue);
+                }}
+              />
+            )}
           </div>
         </div>
       </div>
