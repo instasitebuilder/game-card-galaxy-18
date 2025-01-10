@@ -224,7 +224,7 @@ const puzzles = {
 };
 
 const CrosswordGame = () => {
-  const [difficulty, setDifficulty] = useState<Difficulty>('easy');
+  const [difficulty, setDifficulty] = useState<Difficulty>('level1');
   const [selectedCell, setSelectedCell] = useState<{ row: number; col: number } | null>(null);
   const [selectedClue, setSelectedClue] = useState<Clue | null>(null);
   const [userAnswers, setUserAnswers] = useState<string[][]>([]);
@@ -237,13 +237,15 @@ const CrosswordGame = () => {
   const currentPuzzle = puzzles[difficulty];
 
   useEffect(() => {
-    setUserAnswers(
-      Array(currentPuzzle.size).fill(null).map(() => Array(currentPuzzle.size).fill(''))
-    );
-    setTimer(0);
-    setHintsRemaining(3);
-    setScore(0);
-    setProgress(0);
+    if (currentPuzzle) {
+      setUserAnswers(
+        Array(currentPuzzle.size).fill(null).map(() => Array(currentPuzzle.size).fill(''))
+      );
+      setTimer(0);
+      setHintsRemaining(3);
+      setScore(0);
+      setProgress(0);
+    }
   }, [difficulty]);
 
   useEffect(() => {
@@ -410,24 +412,28 @@ const CrosswordGame = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-6">
               <GameControls timer={timer} onCheck={checkPuzzle} />
-              <CrosswordGrid
-                size={currentPuzzle.size}
-                clues={currentPuzzle.clues}
-                selectedCell={selectedCell}
-                userAnswers={userAnswers}
-                onCellSelect={handleCellSelect}
-                onInput={handleInput}
-              />
+              {currentPuzzle && (
+                <CrosswordGrid
+                  size={currentPuzzle.size}
+                  clues={currentPuzzle.clues}
+                  selectedCell={selectedCell}
+                  userAnswers={userAnswers}
+                  onCellSelect={handleCellSelect}
+                  onInput={handleInput}
+                />
+              )}
             </div>
             <div>
-              <CluesList
-                clues={currentPuzzle.clues}
-                selectedClue={selectedClue}
-                onClueSelect={(clue) => {
-                  setSelectedCell({ row: clue.startRow, col: clue.startCol });
-                  setSelectedClue(clue);
-                }}
-              />
+              {currentPuzzle && (
+                <CluesList
+                  clues={currentPuzzle.clues}
+                  selectedClue={selectedClue}
+                  onClueSelect={(clue) => {
+                    setSelectedCell({ row: clue.startRow, col: clue.startCol });
+                    setSelectedClue(clue);
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>
